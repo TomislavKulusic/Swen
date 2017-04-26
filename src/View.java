@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 import java.awt.image.BufferedImage;
@@ -9,7 +10,6 @@ import java.awt.event.*;
 
 public class View extends JFrame implements ActionListener{
 
-   ArrayList<File> files;
    File file;
    ArrayList<JPanel> imagePanels;
    ArrayList<JButton> actionButtons;
@@ -18,21 +18,27 @@ public class View extends JFrame implements ActionListener{
    Controller controller = new Controller();
    Image cropImage;
    Image currentImage = null;
+   ArrayList<File> files;
    
    
    // default constructor where we load all images from image folder
    // creating arrayLIst of files to store all the pictures
    // calling the createFrame method for creating frame
    public View() {
-   
-      file = new File("images");
-      files = new ArrayList<File>(Arrays.asList(file.listFiles()));
+
       imagePanels = new ArrayList<JPanel>();
-         
+
+      JFileChooser jfc = new JFileChooser();
+      jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+      int returnVal = jfc.showOpenDialog(this);
+
+      if(returnVal == JFileChooser.APPROVE_OPTION) {
+         Loader loader = new Loader(jfc.getSelectedFile().getAbsolutePath());
+         files = loader.getFiles();
+      }
+
       createFrame();
-   
       setVisible(true);
-   
    }
    
    
@@ -166,6 +172,7 @@ public class View extends JFrame implements ActionListener{
    public static void main(String [] args){
    
       new View();
+
    }
 
 }
