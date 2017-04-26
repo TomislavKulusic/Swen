@@ -6,19 +6,24 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
 
-public class ImageEdit extends JFrame{
+public class ImageEdit extends JFrame implements ActionListener{
 
    public JPanel pictureView;
    public JLabel imageLabel;
+   public JPanel totalView;
+   public Image cropImage;
+   public Image currentImage;
+   public Controller controller = new Controller();
    ArrayList<File> files;
    File file;   
 
    public ImageEdit(Image img) throws IOException{
     
       setImageView();
+      toolbar();
       loadImage(img);
       setVisible(true);
-
+   
    
    }
    
@@ -26,11 +31,9 @@ public class ImageEdit extends JFrame{
    
       setSize(500,500);
       
+      
       pictureView = new JPanel();
       imageLabel = new JLabel();
-      
-      
-      
       pictureView.add(imageLabel);
       
       add(pictureView);
@@ -39,10 +42,50 @@ public class ImageEdit extends JFrame{
    }
    
    public void loadImage(Image img) {
-      System.out.println(img.getImage());
       imageLabel.setIcon(img.getImage());
-
+      currentImage = img;
+   
    }
+   
+   public void toolbar() {
+      
+      JButton crop = new JButton("Crop");
+      JButton left = new JButton("Rotate Left");
+      JButton right = new JButton("Rotate Right");
+      JButton save = new JButton("Save");
+      JPanel toolbarPanel = new JPanel(new FlowLayout());
+      toolbarPanel.add(crop);
+      toolbarPanel.add(left);
+      toolbarPanel.add(right);
+      toolbarPanel.add(save);
+      
+      crop.addActionListener(this);
+      
+      add(toolbarPanel,BorderLayout.SOUTH);
+   }
+   
+   
+   public void actionPerformed(ActionEvent e) {
+  
+        if(e.getActionCommand().equals("Crop")) {
+                        
+            cropImage = controller.Crop(currentImage);
+            System.out.println(cropImage.getWidth());
+            
+            
+        }
+        
+        if(e.getActionCommand().equals("Save")) {
+            
+            
+            //controller.Save(cropImage);
+            
+        }
+       
+   }
+   
+   
+   
    
    
    // file = new File("../images/");
