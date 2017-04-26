@@ -6,15 +6,15 @@ public class Controller {
    Save save = new Save();
    Crop crop = new Crop();
    
-   ImageSize size;
+   Image image;
    
    public Controller() {
    
    }
    
-   public Controller(ImageSize size) {
+   public Controller(Image image) {
    
-      this.size = size;
+      this.image = image;
       
    }
 
@@ -25,7 +25,7 @@ public class Controller {
    
    }
    
-   public ImageSize Crop() {
+   public Image Crop() {
    
       return crop.Crop();
    

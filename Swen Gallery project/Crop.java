@@ -2,13 +2,12 @@ import javax.swing.*;
 
 public class Crop {
 
-   public ImageSize icon;
+   public Image image;
 
-   public ImageSize Crop() {
+   public Image Crop() {
    
-      icon = new ImageSize(200,200);
-      System.out.println("Picture is cropped" + icon.x + " " + icon.y);
-      return icon;
+      System.out.println("Picture is cropped" + image.getHeight() + " " + image.getWidth());
+      return null;
    }
    
    

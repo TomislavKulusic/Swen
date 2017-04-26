@@ -16,7 +16,7 @@ public class View extends JFrame implements ActionListener{
    JPanel pictureView;
    JLabel wIcon;
    Controller controller = new Controller();
-   ImageSize newImage;
+   Image cropImage;
    
    
    // default constructor where we load all images from image folder
@@ -53,9 +53,12 @@ public class View extends JFrame implements ActionListener{
          for(int i = 1; i < files.size(); i++) {
          
             JPanel panel = new JPanel();
+            
             BufferedImage wPic = ImageIO.read(files.get(i));
-            JButton wIcon = new JButton(new ImageIcon(wPic));
-            panel.setPreferredSize(new Dimension(50, 50));
+            
+            Image image = new Image(new ImageIcon(wPic));
+            
+            JButton wIcon = new JButton(image.getImage());
             
             // this action listener is used to load image in center
             wIcon.addActionListener( 
@@ -63,7 +66,7 @@ public class View extends JFrame implements ActionListener{
                {
                   public void actionPerformed(ActionEvent e)
                   {
-                     loadImage(wPic);
+                     loadImage(image);
                   }
                });
             
@@ -75,6 +78,7 @@ public class View extends JFrame implements ActionListener{
          
          
          JPanel left = new JPanel(new GridLayout(0,1));
+         
          for(int i = 0; i < imagePanels.size(); i++) {
             
             left.add(imagePanels.get(i));
@@ -129,13 +133,11 @@ public class View extends JFrame implements ActionListener{
    
    }
    
-   public void loadImage(BufferedImage img) {
+   public void loadImage(Image img) {
    
-   
-   ImageIcon i = new ImageIcon(img);
-   wIcon.setIcon(i);
-   System.out.println("Current image height: " + i.getIconHeight());
-   System.out.println("Current image width: " + i.getIconWidth());
+   wIcon.setIcon(img.getImage());
+   System.out.println("Current image height: " + img.getHeight());
+   System.out.println("Current image width: " + img.getWidth());
       
    }
    
@@ -143,7 +145,8 @@ public class View extends JFrame implements ActionListener{
    public void actionPerformed(ActionEvent e) {
   
         if(e.getActionCommand().equals("Crop")) {
-            newImage = controller.Crop();
+            
+            cropImage = controller.Crop();
             
         }
         
