@@ -18,11 +18,11 @@ public class Image {
    }
    
    public int getHeight() {
-      return this.image.getIconHeight();
+      return height;
    }
    
    public int getWidth() {
-      return this.image.getIconWidth();
+      return width;
    }
    
    public void setWidth(int w) {
