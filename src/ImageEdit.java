@@ -20,6 +20,9 @@ public class ImageEdit extends JFrame implements ActionListener{
       setImageView();
       toolbar();
       loadImage(img);
+      Point frameLocationPoint = ImageView.frame.getLocation();
+      frameLocationPoint.setLocation(frameLocationPoint.getX()+500, frameLocationPoint.getY());
+      setLocation(frameLocationPoint);
       setVisible(true);
    
    
@@ -40,7 +43,7 @@ public class ImageEdit extends JFrame implements ActionListener{
    }
    
    public void loadImage(CustomImage img) {
-      imageLabel.setIcon(img.getImage());
+      imageLabel.setIcon(img.getImageReScaled(450, 370));
       currentCustomImage = img;
    
    }

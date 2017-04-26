@@ -17,10 +17,8 @@ public class CustomImage {
     
    }
 
-   public ImageIcon getImageIcon(){
-      Image img = image.getImage() ;
-      Image newimg = img.getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH ) ;
-      return new ImageIcon( newimg );
+   public ImageIcon getImageReScaled(int width, int height){
+      return new ImageIcon( image.getImage().getScaledInstance( width, height,  java.awt.Image.SCALE_SMOOTH ) );
    }
 
    public ImageIcon getImage() {

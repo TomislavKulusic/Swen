@@ -14,7 +14,7 @@ public class ImageView  implements ActionListener {
 
     private ArrayList<File> files;
     private ArrayList<CustomImage> customImages;
-    private JFrame frame;
+    public static JFrame frame;
 
     public ImageView(){
 
@@ -23,6 +23,8 @@ public class ImageView  implements ActionListener {
         frame.setLayout(new GridLayout(0, 5));
         frame.setSize(500,500);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
 
 
         JFileChooser jfc = new JFileChooser();
@@ -47,7 +49,7 @@ public class ImageView  implements ActionListener {
         for(int i = 0; i < customImages.size(); i++){
             CustomImage customImage = customImages.get(i);
             JPanel imagePanel = new JPanel();
-            JButton imageIcon = new JButton(customImage.getImageIcon());
+            JButton imageIcon = new JButton(customImage.getImageReScaled(100, 100));
 
 
             imageIcon.addActionListener(
