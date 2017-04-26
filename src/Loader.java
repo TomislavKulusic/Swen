@@ -1,4 +1,8 @@
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,6 +13,7 @@ public class Loader {
 
     String filePath;
     File directory;
+    ArrayList<File> files;
 
     public Loader(String filePath){
 
@@ -20,7 +25,33 @@ public class Loader {
 
     public ArrayList<File> getFiles(){
 
-        return new ArrayList<File>(Arrays.asList(directory.listFiles()));
+        files = new ArrayList<File>(Arrays.asList(directory.listFiles()));
+        return files;
+
+    }
+
+    public ArrayList<Image> getImages(ArrayList<File> files){
+
+        ArrayList<Image> images = new ArrayList<>();
+
+        for(int i = 0; i < files.size(); i++){
+
+            try {
+
+
+                BufferedImage bImage = ImageIO.read(files.get(i));
+                Image image = new Image(new ImageIcon(bImage));
+
+                images.add(image);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return images;
+
 
     }
 
