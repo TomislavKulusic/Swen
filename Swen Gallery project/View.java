@@ -17,6 +17,7 @@ public class View extends JFrame implements ActionListener{
    JLabel wIcon;
    Controller controller = new Controller();
    Image cropImage;
+   Image currentImage = null;
    
    
    // default constructor where we load all images from image folder
@@ -136,8 +137,9 @@ public class View extends JFrame implements ActionListener{
    public void loadImage(Image img) {
    
    wIcon.setIcon(img.getImage());
-   System.out.println("Current image height: " + img.getHeight());
-   System.out.println("Current image width: " + img.getWidth());
+   currentImage = img;
+   ///System.out.println("Current image height: " + img.getHeight());
+   //System.out.println("Current image width: " + img.getWidth());
       
    }
    
@@ -146,7 +148,9 @@ public class View extends JFrame implements ActionListener{
   
         if(e.getActionCommand().equals("Crop")) {
             
-            cropImage = controller.Crop();
+            cropImage = controller.Crop(currentImage);
+            System.out.println(cropImage.getWidth());
+            
             
         }
         

@@ -25,9 +25,9 @@ public class Controller {
    
    }
    
-   public Image Crop() {
+   public Image Crop(Image img) {
    
-      return crop.Crop();
+      return crop.Crop(img);
    
    }
 

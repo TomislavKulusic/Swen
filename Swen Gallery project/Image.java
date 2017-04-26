@@ -25,13 +25,13 @@ public class Image {
       return this.image.getIconWidth();
    }
    
-   public void setWidth(int width) {
-      this.width = width;
+   public void setWidth(int w) {
+      width = w;
    }
    
    
-   public void setHeight(int height) {
-      this.height = height;
+   public void setHeight(int h) {
+      height = h;
    }
    
    public ImageIcon getImage() {
