@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.util.*;
 import java.io.*;
-import java.awt.image.BufferedImage;
 import java.awt.*;
-import javax.imageio.ImageIO;
 import java.awt.event.*;
 
 public class ImageEdit extends JFrame implements ActionListener{
@@ -11,13 +9,13 @@ public class ImageEdit extends JFrame implements ActionListener{
    public JPanel pictureView;
    public JLabel imageLabel;
    public JPanel totalView;
-   public Image cropImage;
-   public Image currentImage;
+   public CustomImage cropCustomImage;
+   public CustomImage currentCustomImage;
    public Controller controller = new Controller();
    ArrayList<File> files;
    File file;   
 
-   public ImageEdit(Image img) throws IOException{
+   public ImageEdit(CustomImage img) throws IOException{
     
       setImageView();
       toolbar();
@@ -41,9 +39,9 @@ public class ImageEdit extends JFrame implements ActionListener{
    
    }
    
-   public void loadImage(Image img) {
+   public void loadImage(CustomImage img) {
       imageLabel.setIcon(img.getImage());
-      currentImage = img;
+      currentCustomImage = img;
    
    }
    
@@ -69,8 +67,8 @@ public class ImageEdit extends JFrame implements ActionListener{
   
         if(e.getActionCommand().equals("Crop")) {
                         
-            cropImage = controller.Crop(currentImage);
-            System.out.println(cropImage.getWidth());
+            cropCustomImage = controller.Crop(currentCustomImage);
+            System.out.println(cropCustomImage.getWidth());
             
             
         }
@@ -78,7 +76,7 @@ public class ImageEdit extends JFrame implements ActionListener{
         if(e.getActionCommand().equals("Save")) {
             
             
-            //controller.Save(cropImage);
+            //controller.Save(cropCustomImage);
             
         }
        
@@ -120,17 +118,17 @@ public class ImageEdit extends JFrame implements ActionListener{
             
             //BufferedImage wPic = ImageIO.read(files.get(i));
             
-                     //Image image = new Image(new ImageIcon(wPic));
+                     //CustomImage customImage = new CustomImage(new ImageIcon(wPic));
             
-            //JButton wIcon = new JButton(image.getImage());
+            //JButton wIcon = new JButton(customImage.getImage());
             
-            // this action listener is used to load image in center
+            // this action listener is used to load customImage in center
             // wIcon.addActionListener( 
 //                new ActionListener()
 //                {
 //                   public void actionPerformed(ActionEvent e)
 //                   {
-//                     // loadImage(image);
+//                     // loadImage(customImage);
 //                   }
 //                });
             
@@ -157,7 +155,7 @@ public class ImageEdit extends JFrame implements ActionListener{
 //       
 //       }
 //       catch(IOException e) {
-//          System.out.println("Cannot Load image");
+//          System.out.println("Cannot Load customImage");
 //       }
 //       
 //    
@@ -197,10 +195,10 @@ public class ImageEdit extends JFrame implements ActionListener{
 //    
 //    }
 //    
-//    public void loadImage(Image img) {
+//    public void loadImage(CustomImage img) {
 //    
 //    wIcon.setIcon(img.getImage());
-//    currentImage = img;
+//    currentCustomImage = img;
 //  
 //       
 //    }
@@ -210,8 +208,8 @@ public class ImageEdit extends JFrame implements ActionListener{
 //   
 //         if(e.getActionCommand().equals("Crop")) {
 //                         
-//             cropImage = controller.Crop(currentImage);
-//             System.out.println(cropImage.getWidth());
+//             cropCustomImage = controller.Crop(currentCustomImage);
+//             System.out.println(cropCustomImage.getWidth());
 //             
 //             
 //         }
@@ -219,7 +217,7 @@ public class ImageEdit extends JFrame implements ActionListener{
 //         if(e.getActionCommand().equals("Save")) {
 //             
 //             
-//             controller.Save(cropImage);
+//             controller.Save(cropCustomImage);
 //             
 //         }
 //        

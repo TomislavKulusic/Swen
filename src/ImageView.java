@@ -13,15 +13,15 @@ public class ImageView  implements ActionListener {
 
 
     private ArrayList<File> files;
-    private ArrayList<Image> images;
+    private ArrayList<CustomImage> customImages;
     private JFrame frame;
 
     public ImageView(){
 
         frame = new JFrame();
 
-        frame.setLayout(new GridLayout(0, 4));
-        frame.setSize(800,500);
+        frame.setLayout(new GridLayout(0, 5));
+        frame.setSize(500,500);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
@@ -34,21 +34,20 @@ public class ImageView  implements ActionListener {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             Loader loader = new Loader(jfc.getSelectedFile().getAbsolutePath());
             files = loader.getFiles();
-            images = loader.getImages(files);
-            populateGrid(images);
-            System.out.println("I work");
+            customImages = loader.getImages(files);
+            populateGrid(customImages);
         }
 
         frame.setVisible(true);
     }
 
-    public void populateGrid(ArrayList<Image> images){
+    public void populateGrid(ArrayList<CustomImage> customImages){
 
 
-        for(int i = 0; i < images.size(); i++){
-            Image image = images.get(i);
+        for(int i = 0; i < customImages.size(); i++){
+            CustomImage customImage = customImages.get(i);
             JPanel imagePanel = new JPanel();
-            JButton imageIcon = new JButton(image.getImage());
+            JButton imageIcon = new JButton(customImage.getImageIcon());
 
 
             imageIcon.addActionListener(
@@ -57,7 +56,7 @@ public class ImageView  implements ActionListener {
                         public void actionPerformed(ActionEvent e)
                         {
                             try {
-                                new ImageEdit(image);
+                                new ImageEdit(customImage);
                             } catch (IOException e1) {
                                 e1.printStackTrace();
                             }
@@ -67,8 +66,6 @@ public class ImageView  implements ActionListener {
             imagePanel.add(imageIcon);
             frame.add(imagePanel);
         }
-
-
 
     }
 

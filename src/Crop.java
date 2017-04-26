@@ -1,18 +1,16 @@
-import javax.swing.*;
-
 public class Crop {
 
-   public Image Crop(Image img) {
+   public CustomImage Crop(CustomImage img) {
    
-      Image image = img;
+      CustomImage customImage = img;
       
       
-      System.out.println("Current image width" + img.getWidth());
+      System.out.println("Current customImage width" + img.getWidth());
       
-      image.setWidth(500);
+      customImage.setWidth(500);
       
       
-      return image;
+      return customImage;
    }
    
    

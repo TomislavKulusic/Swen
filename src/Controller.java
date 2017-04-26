@@ -1,20 +1,17 @@
-import javax.swing.*;
-
-
 public class Controller {
 
    Save save = new Save();
    Crop crop = new Crop();
    
-   Image image;
+   CustomImage customImage;
    
    public Controller() {
    
    }
    
-   public Controller(Image image) {
+   public Controller(CustomImage customImage) {
    
-      this.image = image;
+      this.customImage = customImage;
       
    }
 
@@ -25,7 +22,7 @@ public class Controller {
    
    }
    
-   public Image Crop(Image img) {
+   public CustomImage Crop(CustomImage img) {
    
       return crop.Crop(img);
    

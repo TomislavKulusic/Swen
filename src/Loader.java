@@ -30,9 +30,9 @@ public class Loader {
 
     }
 
-    public ArrayList<Image> getImages(ArrayList<File> files){
+    public ArrayList<CustomImage> getImages(ArrayList<File> files){
 
-        ArrayList<Image> images = new ArrayList<>();
+        ArrayList<CustomImage> customImages = new ArrayList<>();
 
         for(int i = 0; i < files.size(); i++){
 
@@ -40,9 +40,9 @@ public class Loader {
 
 
                 BufferedImage bImage = ImageIO.read(files.get(i));
-                Image image = new Image(new ImageIcon(bImage));
+                CustomImage customImage = new CustomImage(new ImageIcon(bImage));
 
-                images.add(image);
+                customImages.add(customImage);
 
 
             } catch (IOException e) {
@@ -50,7 +50,7 @@ public class Loader {
             }
         }
 
-        return images;
+        return customImages;
 
 
     }
