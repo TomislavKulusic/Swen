@@ -1,5 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+
 
 
 public class CustomImage {
@@ -7,12 +9,15 @@ public class CustomImage {
    public ImageIcon image;
    public int height;
    public int width;
+   public BufferedImage img;
    
    public CustomImage(ImageIcon image) {
    
       this.image = image;
       this.height = image.getIconHeight();
       this.width = image.getIconWidth();
+      img = (BufferedImage)image.getImage();
+
       
     
    }
@@ -44,4 +49,14 @@ public class CustomImage {
    public void setWidth(int width) {
       this.width = width;
    }
+   
+   public BufferedImage getBufferedImage() {
+      return img;
+   }
+   
+   public void setBuffered(BufferedImage img)
+   {
+      this.img = img;
+   }
+
 }

@@ -2,6 +2,8 @@ public class Controller {
 
    Save save = new Save();
    Crop crop = new Crop();
+      Flip flip = new Flip();
+
    
    CustomImage customImage;
    
@@ -27,6 +29,13 @@ public class Controller {
       return crop.Crop(img);
    
    }
+   
+   public void Flip(CustomImage img) {
+   
+      flip.Flip(img);
+   
+   }
+
 
 
 

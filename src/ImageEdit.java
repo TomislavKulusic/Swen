@@ -48,19 +48,24 @@ public class ImageEdit extends JFrame implements ActionListener{
    
    }
    
-   public void toolbar() {
+  public void toolbar() {
       
       JButton crop = new JButton("Crop");
+      JButton flip = new JButton("Flip");
       JButton left = new JButton("Rotate Left");
       JButton right = new JButton("Rotate Right");
       JButton save = new JButton("Save");
       JPanel toolbarPanel = new JPanel(new FlowLayout());
       toolbarPanel.add(crop);
+      toolbarPanel.add(flip);
       toolbarPanel.add(left);
       toolbarPanel.add(right);
+      
       toolbarPanel.add(save);
       
       crop.addActionListener(this);
+      save.addActionListener(this);
+      flip.addActionListener(this);
       
       add(toolbarPanel,BorderLayout.SOUTH);
    }
@@ -76,13 +81,20 @@ public class ImageEdit extends JFrame implements ActionListener{
             
         }
         
-        if(e.getActionCommand().equals("Save")) {
+        if(e.getActionCommand().equals("Flip")) {
+            controller.Flip(currentCustomImage);
+            this.dispose();
+            try {
+            new ImageEdit(currentCustomImage);
+            } catch(IOException adsa) {
+            
+            }
+
             
             
             //controller.Save(cropCustomImage);
             
-        }
-       
+        }       
    }
    
    
