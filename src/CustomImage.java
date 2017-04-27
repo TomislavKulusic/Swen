@@ -22,12 +22,9 @@ public class CustomImage {
     
    }
 
-   public ImageIcon getImageReScaled(int width, int height){
-      return new ImageIcon( image.getImage().getScaledInstance( width, height,  java.awt.Image.SCALE_SMOOTH ) );
-   }
 
-   public ImageIcon getImage() {
-      return image;
+   public ImageIcon getImage(int width, int height) {
+      return new ImageIcon( image.getImage().getScaledInstance( width, height,  java.awt.Image.SCALE_SMOOTH ) );
    }
 
    public void setImage(ImageIcon image) {
