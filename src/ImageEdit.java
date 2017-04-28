@@ -43,7 +43,7 @@ public class ImageEdit extends JFrame implements ActionListener{
    }
    
    public void loadImage(CustomImage img) {
-      imageLabel.setIcon(img.getImage(450, 370));
+      imageLabel.setIcon(img.getRescaledImage(450,370));
       currentCustomImage = img;
    
    }
@@ -86,7 +86,7 @@ public class ImageEdit extends JFrame implements ActionListener{
             //this.dispose();
             
             imageLabel.setIcon(null);
-            imageLabel.setIcon(currentCustomImage.getImage(450,370));
+            imageLabel.setIcon(currentCustomImage.getRescaledImage(450,370));
             
             // try {
 //             new ImageEdit(currentCustomImage);

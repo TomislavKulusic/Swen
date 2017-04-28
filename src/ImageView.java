@@ -49,7 +49,7 @@ public class ImageView  implements ActionListener {
         for(int i = 0; i < customImages.size(); i++){
             CustomImage customImage = customImages.get(i);
             JPanel imagePanel = new JPanel();
-            JButton imageIcon = new JButton(customImage.getImage(100, 100));
+            JButton imageIcon = new JButton(customImage.getRescaledImage(100,100));
 
 
             imageIcon.addActionListener(
