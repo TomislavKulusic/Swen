@@ -53,20 +53,20 @@ public class ImageEdit extends JFrame implements ActionListener{
       
       JButton crop = new JButton("Crop");
       JButton flip = new JButton("Flip");
-      JButton left = new JButton("Rotate Left");
-      JButton right = new JButton("Rotate Right");
+      JButton rotate = new JButton("Rotate");
       JButton save = new JButton("Save");
       JPanel toolbarPanel = new JPanel(new FlowLayout());
       toolbarPanel.add(crop);
       toolbarPanel.add(flip);
-      toolbarPanel.add(left);
-      toolbarPanel.add(right);
+      toolbarPanel.add(rotate);
+
       
       toolbarPanel.add(save);
       
       crop.addActionListener(this);
       save.addActionListener(this);
       flip.addActionListener(this);
+      rotate.addActionListener(this);
       
       add(toolbarPanel,BorderLayout.SOUTH);
    }
@@ -79,8 +79,6 @@ public class ImageEdit extends JFrame implements ActionListener{
             controller.Crop(currentCustomImage);
             imageLabel.setIcon(null);
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450,370));
-
-            System.out.println("Current image height" + currentCustomImage.getHeight());
 
             
             
@@ -100,6 +98,12 @@ public class ImageEdit extends JFrame implements ActionListener{
             } else {
                 System.out.print("Failed to Save image");
             }
+        }
+
+        if(e.getActionCommand().equals("Rotate")) {
+            controller.Rotate(currentCustomImage,30);
+            imageLabel.setIcon(null);
+            imageLabel.setIcon(currentCustomImage.getRescaledImage(450,370));
         }
 
 
