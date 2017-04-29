@@ -1,3 +1,8 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+
 public class Controller {
 
    Save save = new Save();
@@ -18,9 +23,9 @@ public class Controller {
    }
 
    
-   public boolean Save(int x,int y) {
+   public boolean Save(BufferedImage img) {
       
-      return save.Save(x,y);
+      return save.Save(img);
    
    }
    

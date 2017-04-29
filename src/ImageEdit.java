@@ -25,7 +25,6 @@ public class ImageEdit extends JFrame implements ActionListener{
       setLocation(frameLocationPoint);
       setVisible(true);
    
-   
    }
    
    public void setImageView() {
@@ -98,7 +97,11 @@ public class ImageEdit extends JFrame implements ActionListener{
             
             //controller.Save(cropCustomImage);
             
-        }       
+        }
+        
+        if(e.getActionCommand().equals("Save")) {
+            controller.Save(currentCustomImage.getBufferedImage());
+        }
    }
    
    

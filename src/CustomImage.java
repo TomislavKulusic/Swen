@@ -17,9 +17,6 @@ public class CustomImage {
       this.height = image.getIconHeight();
       this.width = image.getIconWidth();
       img = (BufferedImage)image.getImage();
-
-      
-    
    }
 
    public ImageIcon getImage() {
@@ -28,10 +25,8 @@ public class CustomImage {
    
    public ImageIcon getRescaledImage(int width, int height) {
       return new ImageIcon(image.getImage().getScaledInstance( width, height,  java.awt.Image.SCALE_SMOOTH ) );
-
+      
    }
-   
-   
 
    public void setImage(ImageIcon image) {
       this.image = image;
@@ -61,5 +56,5 @@ public class CustomImage {
    {
       this.img = img;
    }
-
+   
 }

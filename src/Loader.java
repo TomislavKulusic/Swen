@@ -45,8 +45,8 @@ public class Loader {
                 customImages.add(customImage);
 
 
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                
             }
         }
 
