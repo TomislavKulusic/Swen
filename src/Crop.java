@@ -1,17 +1,26 @@
+import javax.swing.*;
+import java.awt.*;
+
 public class Crop {
 
-   public CustomImage Crop(CustomImage img) {
+      CustomImage customImage;
+
+   public void Crop(CustomImage img) {
    
-      CustomImage customImage = img;
+      customImage = img;
+
       
-      
-      System.out.println("Current customImage width" + img.getWidth());
-      
-      customImage.setWidth(500);
-      
-      
-      return customImage;
+      resize(100,100);
    }
+
+   public void resize(int w, int h)
+   {
+      Image im = customImage.getBufferedImage().getScaledInstance(w, h, customImage.getBufferedImage().SCALE_DEFAULT);
+      customImage.setImage(new ImageIcon(im));
+      customImage.setBufferedFromImage();
+   }
+
+
    
    
 }

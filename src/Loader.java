@@ -38,9 +38,7 @@ public class Loader {
 
             try {
 
-
-                BufferedImage bImage = ImageIO.read(files.get(i));
-                CustomImage customImage = new CustomImage(new ImageIcon(bImage));
+                CustomImage customImage = new CustomImage(files.get(i));
 
                 customImages.add(customImage);
 
