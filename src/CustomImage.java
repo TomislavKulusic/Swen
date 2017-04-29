@@ -16,7 +16,7 @@ public class CustomImage {
    
    public CustomImage(File imageFile) {
 
-
+      this.file = imageFile;
       this.image = new ImageIcon(imageFile.toString());
 
       try {
@@ -70,6 +70,10 @@ public class CustomImage {
       Graphics g = img.createGraphics();
       image.paintIcon(null, g, 0,0);
       g.dispose();
+   }
+
+   public String getUrl() {
+      return file.getName();
    }
 
 }

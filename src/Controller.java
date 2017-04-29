@@ -23,7 +23,7 @@ public class Controller {
    }
 
    
-   public boolean Save(BufferedImage img) {
+   public boolean Save(CustomImage img) {
       
       return save.Save(img);
    

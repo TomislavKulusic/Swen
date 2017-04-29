@@ -6,9 +6,11 @@ import javax.imageio.ImageIO;
 
 public class Save {
 
-   public boolean Save(BufferedImage img) {
+   public boolean Save(CustomImage image) {
       try {
-         ImageIO.write(img, "jpg", new File("img.jpg"));
+         BufferedImage img = image.getBufferedImage();
+         System.out.println(image.getUrl());
+         ImageIO.write(img, "jpg", new File("edited" + image.getUrl()));
          
          return true;
       } catch(Exception e) {

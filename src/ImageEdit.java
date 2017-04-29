@@ -95,7 +95,11 @@ public class ImageEdit extends JFrame implements ActionListener{
         }
         
         if(e.getActionCommand().equals("Save")) {
-            controller.Save(currentCustomImage.getBufferedImage());
+            if(controller.Save(currentCustomImage)) {
+                System.out.print("Image Saved");
+            } else {
+                System.out.print("Failed to Save image");
+            }
         }
 
 
