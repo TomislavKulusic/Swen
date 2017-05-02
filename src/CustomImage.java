@@ -13,17 +13,29 @@ public class CustomImage {
    public int width;
    public File file;
    public BufferedImage img;
+   public String tag = "";
+   public String name;
    
    public CustomImage(File imageFile) {
 
       this.file = imageFile;
       this.image = new ImageIcon(imageFile.toString());
 
+
+
       try {
          img = ImageIO.read(imageFile);
       } catch (IOException e) {
          e.printStackTrace();
       }
+   }
+
+   public String getName () {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
    }
 
    public ImageIcon getImage() {
@@ -74,6 +86,14 @@ public class CustomImage {
 
    public String getUrl() {
       return file.getName();
+   }
+
+   public void addTag(String addTag) {
+      tag = tag + addTag + ",";
+   }
+
+   public String getTag() {
+      return tag;
    }
 
 }

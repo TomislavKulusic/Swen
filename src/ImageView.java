@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
@@ -14,9 +15,14 @@ public class ImageView  implements ActionListener {
 
     private ArrayList<File> files;
     private ArrayList<CustomImage> customImages;
+    private ArrayList<CustomImage> databaseImages;
     public static JFrame frame;
+    private Connection connection;
 
     public ImageView(){
+
+        Database database = new Database();
+        connection = database.getConnection();
 
         frame = new JFrame();
 
@@ -36,8 +42,13 @@ public class ImageView  implements ActionListener {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             Loader loader = new Loader(jfc.getSelectedFile().getAbsolutePath());
             files = loader.getFiles();
-            customImages = loader.getImages(files);
-            populateGrid(customImages);
+
+            DatabaseImages dbimg = new DatabaseImages(files,connection);
+
+
+            databaseImages = dbimg.getImagesFromDatabase();
+
+            populateGrid(databaseImages);
         }
 
         frame.setVisible(true);
@@ -58,7 +69,7 @@ public class ImageView  implements ActionListener {
                         public void actionPerformed(ActionEvent e)
                         {
                             try {
-                                new ImageEdit(customImage);
+                                new ImageEdit(customImage,connection);
                             } catch (IOException e1) {
                                 e1.printStackTrace();
                             }

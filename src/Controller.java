@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.sql.Connection;
 
 public class Controller {
 
@@ -9,6 +10,7 @@ public class Controller {
    Crop crop = new Crop();
       Flip flip = new Flip();
       Rotate rotate = new Rotate();
+      AddTag addtag = new AddTag();
 
    
    CustomImage customImage;
@@ -46,6 +48,9 @@ public class Controller {
        rotate.Rotate(img,degrees);
    }
 
+   public void addTag(String tag, Connection connection,String tags,String name) {
+      addtag.AddTag(tag,connection,tags,name);
+   }
 
 
 

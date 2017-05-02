@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.sql.Connection;
 import java.util.*;
 import java.io.*;
 import java.awt.*;
@@ -12,14 +13,19 @@ public class ImageEdit extends JFrame implements ActionListener{
    public CustomImage cropCustomImage;
    public CustomImage currentCustomImage;
    public Controller controller = new Controller();
+   public JLabel heightLabel;
+   public JLabel widthLabel;
+   public Connection connection = null;
    ArrayList<File> files;
    File file;   
 
-   public ImageEdit(CustomImage img) throws IOException{
-    
+   public ImageEdit(CustomImage img, Connection connection) throws IOException{
+
+      this.connection = connection;
       setImageView();
-      toolbar();
+
       loadImage(img);
+      toolbar();
       Point frameLocationPoint = ImageView.frame.getLocation();
       frameLocationPoint.setLocation(frameLocationPoint.getX()+500, frameLocationPoint.getY());
       setLocation(frameLocationPoint);
@@ -50,24 +56,36 @@ public class ImageEdit extends JFrame implements ActionListener{
    }
    
   public void toolbar() {
+
+
       
       JButton crop = new JButton("Crop");
       JButton flip = new JButton("Flip");
       JButton rotate = new JButton("Rotate");
       JButton save = new JButton("Save");
+      JButton addTag = new JButton("Add Tag");
       JPanel toolbarPanel = new JPanel(new FlowLayout());
       toolbarPanel.add(crop);
       toolbarPanel.add(flip);
       toolbarPanel.add(rotate);
-
-      
+      toolbarPanel.add(addTag);
       toolbarPanel.add(save);
       
       crop.addActionListener(this);
       save.addActionListener(this);
       flip.addActionListener(this);
       rotate.addActionListener(this);
-      
+      addTag.addActionListener(this);
+
+      JPanel topPanel = new JPanel(new FlowLayout());
+      widthLabel = new JLabel("Current width: " + Integer.toString(currentCustomImage.getWidth()));
+
+      heightLabel = new JLabel("Current height: " + Integer.toString(currentCustomImage.getHeight()));
+      topPanel.add(widthLabel);
+      topPanel.add(heightLabel);
+
+      add(topPanel,BorderLayout.NORTH);
+
       add(toolbarPanel,BorderLayout.SOUTH);
    }
    
@@ -79,7 +97,10 @@ public class ImageEdit extends JFrame implements ActionListener{
             controller.Crop(currentCustomImage);
             imageLabel.setIcon(null);
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450,370));
-
+            widthLabel.setText(null);
+            heightLabel.setText(null);
+            widthLabel.setText(Integer.toString(currentCustomImage.getWidth()));
+            heightLabel.setText(Integer.toString(currentCustomImage.getHeight()));
             
             
         }
@@ -105,6 +126,14 @@ public class ImageEdit extends JFrame implements ActionListener{
             imageLabel.setIcon(null);
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450,370));
         }
+
+       if(e.getActionCommand().equals("Add Tag")) {
+           String name = JOptionPane.showInputDialog(this, "Add tag");
+
+           controller.addTag(name,connection,currentCustomImage.getTag(),currentCustomImage.getName());
+
+
+       }
 
 
    }
