@@ -5,20 +5,26 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/***
+ * This class is for editing the pictures
+ */
+
 public class ImageEdit extends JFrame implements ActionListener{
 
-   public JPanel pictureView;
-   public JLabel imageLabel;
-   public JPanel totalView;
-   public CustomImage cropCustomImage;
-   public CustomImage currentCustomImage;
-   public Controller controller = new Controller();
-   public JLabel heightLabel;
-   public JLabel widthLabel;
-   public Connection connection = null;
-   ArrayList<File> files;
-   File file;   
+   private JPanel pictureView;
+    private JLabel imageLabel;
+    private CustomImage currentCustomImage;
+    private Controller controller = new Controller();
+    private JLabel heightLabel;
+    private JLabel widthLabel;
+    private Connection connection = null;
 
+    /***
+     * Parametrized constructor which accepts the Custom image and database connection
+      * @param img
+     * @param connection
+     * @throws IOException
+     */
    public ImageEdit(CustomImage img, Connection connection) throws IOException{
 
       this.connection = connection;
@@ -46,7 +52,11 @@ public class ImageEdit extends JFrame implements ActionListener{
       
    
    }
-   
+
+    /***
+     * This class is used to load image to new frame
+     * @param img
+     */
    public void loadImage(CustomImage img) {
       imageLabel.setIcon(img.getRescaledImage(450,370));
 
@@ -59,19 +69,19 @@ public class ImageEdit extends JFrame implements ActionListener{
 
 
       
-      JButton crop = new JButton("Crop");
+      JButton resize = new JButton("Resize");
       JButton flip = new JButton("Flip");
       JButton rotate = new JButton("Rotate");
       JButton save = new JButton("Save");
       JButton addTag = new JButton("Add Tag");
       JPanel toolbarPanel = new JPanel(new FlowLayout());
-      toolbarPanel.add(crop);
+      toolbarPanel.add(resize);
       toolbarPanel.add(flip);
       toolbarPanel.add(rotate);
       toolbarPanel.add(addTag);
       toolbarPanel.add(save);
       
-      crop.addActionListener(this);
+      resize.addActionListener(this);
       save.addActionListener(this);
       flip.addActionListener(this);
       rotate.addActionListener(this);
@@ -88,19 +98,25 @@ public class ImageEdit extends JFrame implements ActionListener{
 
       add(toolbarPanel,BorderLayout.SOUTH);
    }
-   
-   
+
+    /***
+     * Here we hanle all on click commands and depending on click the different action will be invoked
+     * @param e
+     */
    public void actionPerformed(ActionEvent e) {
   
-        if(e.getActionCommand().equals("Crop")) {
-                        
-            controller.Crop(currentCustomImage);
+        if(e.getActionCommand().equals("Resize")) {
+
+
+            int width = Integer.parseInt(JOptionPane.showInputDialog(this, "Set new width"));
+            int height = Integer.parseInt(JOptionPane.showInputDialog(this, "Set new height"));
+            controller.Resize(currentCustomImage,width,height);
             imageLabel.setIcon(null);
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450,370));
             widthLabel.setText(null);
             heightLabel.setText(null);
-            widthLabel.setText(Integer.toString(currentCustomImage.getWidth()));
-            heightLabel.setText(Integer.toString(currentCustomImage.getHeight()));
+            widthLabel.setText("Current width: " + Integer.toString(currentCustomImage.getWidth()));
+            heightLabel.setText("Current height: " + Integer.toString(currentCustomImage.getHeight()));
             
             
         }

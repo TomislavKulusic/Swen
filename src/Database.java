@@ -10,11 +10,12 @@ import java.util.ArrayList;
  */
 public class Database {
 
-    private String host = "host";
-    private String password = "Svakacast1";
-    private String url = "jdbc:mysql://localhost/gallery";
     private Connection connection = null;
 
+    /**
+     * This class is used to connect to database. To connect on your local database you need to change the parameters of getConnection();
+     * @return
+     */
 
     public Connection getConnection() {
         try {

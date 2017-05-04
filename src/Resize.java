@@ -1,16 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Crop {
+public class Resize {
 
       CustomImage customImage;
 
-   public void Crop(CustomImage img) {
+   public void Resize(CustomImage img,int width,int height) {
    
       customImage = img;
 
       
-      resize(100,100);
+      resize(width,height);
    }
 
    public void resize(int w, int h)

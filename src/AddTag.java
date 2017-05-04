@@ -5,6 +5,10 @@ import java.sql.SQLException;
 /**
  * Created by Tomislav on 5/3/2017.
  */
+
+/**
+ * This class is used to add additional tags to picture
+ */
 public class AddTag {
 
     String newTag = "";
@@ -20,7 +24,6 @@ public class AddTag {
             preparedStmt.setString(1, newTag);
             preparedStmt.setString(2, name);
 
-            // execute the java preparedstatement
             preparedStmt.executeUpdate();
 
             connection.close();

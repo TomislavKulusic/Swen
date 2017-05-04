@@ -13,18 +13,14 @@ import java.util.ArrayList;
 public class ImageView  implements ActionListener {
 
 
-    private ArrayList<File> files;
     private ArrayList<CustomImage> customImages;
-    private ArrayList<CustomImage> databaseImages;
     public static JFrame frame;
     private Connection connection;
 
-    public ImageView(ArrayList<File> files){
+    public ImageView(ArrayList<CustomImage> files,Connection connection){
+        this.connection = connection;
+        this.customImages = files;
 
-        this.files = files;
-
-        Database database = new Database();
-        connection = database.getConnection();
 
         frame = new JFrame();
 
@@ -34,24 +30,7 @@ public class ImageView  implements ActionListener {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
-
-//        JFileChooser jfc = new JFileChooser();
-//        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        File workingDirectory = new File(System.getProperty("user.dir"));
-//        jfc.setCurrentDirectory(workingDirectory);
-//        int returnVal = jfc.showOpenDialog(frame);
-//
-//        if(returnVal == JFileChooser.APPROVE_OPTION) {
-//            Loader loader = new Loader(jfc.getSelectedFile().getAbsolutePath());
-//            files = loader.getFiles();
-
-            DatabaseImages dbimg = new DatabaseImages(files,connection);
-
-
-            databaseImages = dbimg.getImagesFromDatabase();
-
-            populateGrid(databaseImages);
-       // }
+            populateGrid(customImages);
 
         frame.setVisible(true);
     }
@@ -62,6 +41,7 @@ public class ImageView  implements ActionListener {
         for(int i = 0; i < customImages.size(); i++){
             CustomImage customImage = customImages.get(i);
             JPanel imagePanel = new JPanel();
+
             JButton imageIcon = new JButton(customImage.getRescaledImage(100,100));
 
 

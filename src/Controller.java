@@ -7,7 +7,7 @@ import java.sql.Connection;
 public class Controller {
 
    Save save = new Save();
-   Crop crop = new Crop();
+   Resize resize = new Resize();
       Flip flip = new Flip();
       Rotate rotate = new Rotate();
       AddTag addtag = new AddTag();
@@ -32,9 +32,9 @@ public class Controller {
    
    }
    
-   public void Crop(CustomImage img) {
+   public void Resize(CustomImage img,int width,int height) {
 
-      crop.Crop(img);
+      resize.Resize(img,width,height);
    
    }
    

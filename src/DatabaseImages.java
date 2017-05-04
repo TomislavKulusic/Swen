@@ -7,22 +7,24 @@ import java.util.Calendar;
 /**
  * Created by Tomislav on 5/2/2017.
  */
+
+/**
+ * This class is mostly used to get all informations from database and also to store changes to database
+ */
+
 public class DatabaseImages {
     private Connection connection;
     private ArrayList<File> list;
 
-    public DatabaseImages(ArrayList<File> list,Connection connection) {
+    public DatabaseImages(Connection connection) {
         this.connection = connection;
-        this.list = list;
-
-        storeAlbums("Album Test");
-        storeImages(list);
-
-
 
     }
 
-
+    /***
+     * This method is used to store new albums to database
+     * @param albumName
+     */
     public void storeAlbums(String albumName) {
         Statement stmt = null;
         try {
@@ -37,6 +39,10 @@ public class DatabaseImages {
 
     }
 
+    /***
+     * This method is used to store images to the database
+     * @param images collection of image paths
+     */
     public void storeImages(ArrayList<File> images) {
         Statement stmt = null;
         int numberRow = 0;
@@ -75,10 +81,13 @@ public class DatabaseImages {
         }
     }
 
+    /***
+     * Here we get all images from database
+     * @return
+     */
     public ArrayList<CustomImage> getImagesFromDatabase() {
         ArrayList<CustomImage> list = new ArrayList<CustomImage>();
 
-        // TRIBA NAPISA QUERY ZA DOBIT JEDAN ALBUM
         String query = "SELECT * FROM images";
         try {
             Statement st = connection.createStatement();
