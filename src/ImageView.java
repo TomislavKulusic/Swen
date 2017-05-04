@@ -19,7 +19,9 @@ public class ImageView  implements ActionListener {
     public static JFrame frame;
     private Connection connection;
 
-    public ImageView(){
+    public ImageView(ArrayList<File> files){
+
+        this.files = files;
 
         Database database = new Database();
         connection = database.getConnection();
@@ -33,15 +35,15 @@ public class ImageView  implements ActionListener {
         frame.setResizable(false);
 
 
-        JFileChooser jfc = new JFileChooser();
-        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        File workingDirectory = new File(System.getProperty("user.dir"));
-        jfc.setCurrentDirectory(workingDirectory);
-        int returnVal = jfc.showOpenDialog(frame);
-
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            Loader loader = new Loader(jfc.getSelectedFile().getAbsolutePath());
-            files = loader.getFiles();
+//        JFileChooser jfc = new JFileChooser();
+//        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//        File workingDirectory = new File(System.getProperty("user.dir"));
+//        jfc.setCurrentDirectory(workingDirectory);
+//        int returnVal = jfc.showOpenDialog(frame);
+//
+//        if(returnVal == JFileChooser.APPROVE_OPTION) {
+//            Loader loader = new Loader(jfc.getSelectedFile().getAbsolutePath());
+//            files = loader.getFiles();
 
             DatabaseImages dbimg = new DatabaseImages(files,connection);
 
@@ -49,7 +51,7 @@ public class ImageView  implements ActionListener {
             databaseImages = dbimg.getImagesFromDatabase();
 
             populateGrid(databaseImages);
-        }
+       // }
 
         frame.setVisible(true);
     }
@@ -82,6 +84,10 @@ public class ImageView  implements ActionListener {
 
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
 
 
 
@@ -92,9 +98,9 @@ public class ImageView  implements ActionListener {
     }
 
 
-    public static void main(String[]args){
-
-        new ImageView();
-
-    }
+//    public static void main(String[]args){
+//
+//        new ImageView();
+//
+//    }
 }
