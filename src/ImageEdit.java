@@ -8,27 +8,33 @@ import java.awt.event.*;
 /***
  * This class is for editing the pictures
  */
+public class ImageEdit extends JFrame implements ActionListener {
 
-public class ImageEdit extends JFrame implements ActionListener{
-
-   private JPanel pictureView;
+    private JPanel pictureView;
     private JLabel imageLabel;
+    private JPanel totalView;
+    private CustomImage cropCustomImage;
     private CustomImage currentCustomImage;
-    private Controller controller = new Controller();
     private JLabel heightLabel;
     private JLabel widthLabel;
     private Connection connection = null;
+    private ArrayList<File> files;
+    private File file;
+
+    private Caretaker caretaker = new Caretaker();
+    private Controller controller = new Controller();
+
 
     /***
      * Parametrized constructor which accepts the Custom image and database connection
-      * @param img
+     * @param img
      * @param connection
      * @throws IOException
      */
-   public ImageEdit(CustomImage img, Connection connection) throws IOException{
+    public ImageEdit(CustomImage img, Connection connection) throws IOException {
 
-      this.connection = connection;
-      setImageView();
+        this.connection = connection;
+        setImageView();
 
       loadImage(img);
       toolbar();
@@ -63,38 +69,44 @@ public class ImageEdit extends JFrame implements ActionListener{
       currentCustomImage = img;
       System.out.println("Current Image height: " + img.getHeight() + " Current width: " + img.getWidth());
 
-   }
-   
-  public void toolbar() {
+    }
+
+    public void toolbar() {
 
 
-      
-      JButton resize = new JButton("Resize");
-      JButton flip = new JButton("Flip");
-      JButton rotate = new JButton("Rotate");
-      JButton save = new JButton("Save");
-      JButton addTag = new JButton("Add Tag");
-      JPanel toolbarPanel = new JPanel(new FlowLayout());
-      toolbarPanel.add(resize);
-      toolbarPanel.add(flip);
-      toolbarPanel.add(rotate);
-      toolbarPanel.add(addTag);
-      toolbarPanel.add(save);
-      
-      resize.addActionListener(this);
-      save.addActionListener(this);
-      flip.addActionListener(this);
-      rotate.addActionListener(this);
-      addTag.addActionListener(this);
+        JButton resize = new JButton("Resize");;
+        JButton flip = new JButton("Flip");
+        JButton rotate = new JButton("Rotate");
+        JButton save = new JButton("Save");
+        JButton addTag = new JButton("Add Tag");
+        JButton undo = new JButton("Undo");
+        JButton redo = new JButton("Redo");
+        JPanel toolbarPanel = new JPanel(new FlowLayout());
+        toolbarPanel.add(resize);
+        toolbarPanel.add(flip);
+        toolbarPanel.add(rotate);
+        toolbarPanel.add(addTag);
+        toolbarPanel.add(save);
 
-      JPanel topPanel = new JPanel(new FlowLayout());
-      widthLabel = new JLabel("Current width: " + Integer.toString(currentCustomImage.getWidth()));
+        resize.addActionListener(this);
+        save.addActionListener(this);
+        flip.addActionListener(this);
+        rotate.addActionListener(this);
+        addTag.addActionListener(this);
+        undo.addActionListener(this);
+        redo.addActionListener(this);
 
-      heightLabel = new JLabel("Current height: " + Integer.toString(currentCustomImage.getHeight()));
-      topPanel.add(widthLabel);
-      topPanel.add(heightLabel);
+        JPanel topPanel = new JPanel(new FlowLayout());
 
-      add(topPanel,BorderLayout.NORTH);
+        widthLabel = new JLabel("Current width: " + Integer.toString(currentCustomImage.getWidth()));
+
+        heightLabel = new JLabel("Current height: " + Integer.toString(currentCustomImage.getHeight()));
+        topPanel.add(undo);
+        topPanel.add(widthLabel);
+        topPanel.add(heightLabel);
+        topPanel.add(redo);
+
+        add(topPanel, BorderLayout.NORTH);
 
       add(toolbarPanel,BorderLayout.SOUTH);
    }
@@ -104,15 +116,15 @@ public class ImageEdit extends JFrame implements ActionListener{
      * @param e
      */
    public void actionPerformed(ActionEvent e) {
-  
+
         if(e.getActionCommand().equals("Resize")) {
 
-
+            caretaker.addMemento(currentCustomImage.save());
             int width = Integer.parseInt(JOptionPane.showInputDialog(this, "Set new width"));
             int height = Integer.parseInt(JOptionPane.showInputDialog(this, "Set new height"));
             controller.Resize(currentCustomImage,width,height);
             imageLabel.setIcon(null);
-            imageLabel.setIcon(currentCustomImage.getRescaledImage(450,370));
+            imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
             widthLabel.setText(null);
             heightLabel.setText(null);
             widthLabel.setText("Current width: " + Integer.toString(currentCustomImage.getWidth()));
@@ -120,41 +132,55 @@ public class ImageEdit extends JFrame implements ActionListener{
             
             
         }
-        
-        if(e.getActionCommand().equals("Flip")) {
+
+        if (e.getActionCommand().equals("Flip")) {
+            caretaker.addMemento(currentCustomImage.save());
+
             controller.Flip(currentCustomImage);
 
             imageLabel.setIcon(null);
-            imageLabel.setIcon(currentCustomImage.getRescaledImage(450,370));
+            imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
 
         }
-        
-        if(e.getActionCommand().equals("Save")) {
-            if(controller.Save(currentCustomImage)) {
+
+        if (e.getActionCommand().equals("Save")) {
+            if (controller.Save(currentCustomImage)) {
                 System.out.print("Image Saved");
             } else {
                 System.out.print("Failed to Save image");
             }
         }
 
-        if(e.getActionCommand().equals("Rotate")) {
-            controller.Rotate(currentCustomImage,30);
+        if (e.getActionCommand().equals("Rotate")) {
+            caretaker.addMemento(currentCustomImage.save());
+
+            controller.Rotate(currentCustomImage, 30);
             imageLabel.setIcon(null);
-            imageLabel.setIcon(currentCustomImage.getRescaledImage(450,370));
+            imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
+
         }
 
-       if(e.getActionCommand().equals("Add Tag")) {
-           String name = JOptionPane.showInputDialog(this, "Add tag");
+        if (e.getActionCommand().equals("Add Tag")) {
+            String name = JOptionPane.showInputDialog(this, "Add tag");
 
-           controller.addTag(name,connection,currentCustomImage.getTag(),currentCustomImage.getName());
-
-
-       }
+            controller.addTag(name, connection, currentCustomImage.getTag(), currentCustomImage.getName());
 
 
-   }
+        }
+
+        if(e.getActionCommand().equals("Undo")){
+            imageLabel.setIcon(null);
+            System.out.println(caretaker.getMementosSize());
+            currentCustomImage.restore(caretaker.getMemento(0));
+            imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
+        }
+
+        if(e.getActionCommand().equals("Redo")){
+
+        }
 
 
-   
+    }
+
 
 }

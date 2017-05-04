@@ -99,4 +99,14 @@ public class CustomImage {
       return tag;
    }
 
+
+   public ImageMemento save(){
+      return new ImageMemento(getImage());
+   }
+
+   public void restore(ImageMemento m){
+      image = m.getState();
+
+   }
+
 }
