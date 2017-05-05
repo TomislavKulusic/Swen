@@ -106,6 +106,7 @@ public class CustomImage {
 
    public void restore(ImageMemento m){
       image = m.getState();
+      setBufferedFromImage();
 
    }
 

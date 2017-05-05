@@ -21,6 +21,7 @@ public class ImageEdit extends JFrame implements ActionListener {
     private ArrayList<File> files;
     private File file;
     private JButton redo = new JButton("Redo");
+    private JButton undo = new JButton("Undo");
 
     private Caretaker caretaker = new Caretaker();
     private Controller controller = new Controller();
@@ -84,7 +85,9 @@ public class ImageEdit extends JFrame implements ActionListener {
         JButton rotate = new JButton("Rotate");
         JButton save = new JButton("Save");
         JButton addTag = new JButton("Add Tag");
-        JButton undo = new JButton("Undo");
+
+        undo.setEnabled(false);
+        redo.setEnabled(false);
 
         JPanel toolbarPanel = new JPanel(new FlowLayout());
         toolbarPanel.add(resize);
@@ -122,6 +125,15 @@ public class ImageEdit extends JFrame implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
 
+        if(!e.getActionCommand().equals("Redo") && !e.getActionCommand().equals("Undo")){
+            if(mCounter != (caretaker.getMementosSize() - 1)){
+                System.out.println("Wiped");
+                caretaker.wipeMementos(mCounter);
+                currentCustomImage.restore(caretaker.getMemento(mCounter));
+            }
+        }
+
+
         if (e.getActionCommand().equals("Resize")) {
             mCounter++;
             int width = Integer.parseInt(JOptionPane.showInputDialog(this, "Set new width"));
@@ -140,13 +152,6 @@ public class ImageEdit extends JFrame implements ActionListener {
         }
 
         if (e.getActionCommand().equals("Flip")) {
-
-            if((caretaker.getMementosSize() > 0 && mementoFlag)){
-                System.out.println("Wiped");
-                caretaker.wipeMementos(mCounter);
-                currentCustomImage.restore(caretaker.getMemento(0));
-            }
-
 
             mCounter++;
 
@@ -189,33 +194,38 @@ public class ImageEdit extends JFrame implements ActionListener {
 
         if (e.getActionCommand().equals("Undo")) {
 
-            if(mCounter == (caretaker.getMementosSize() - 1)){
-                redo.setEnabled(true);
-            }
-
+            redo.setEnabled(true);
             mCounter--;
             imageLabel.setIcon(null);
             System.out.println(caretaker.getMementosSize());
             currentCustomImage.restore(caretaker.getMemento(mCounter));
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
+
+            if(mCounter == 0){
+                undo.setEnabled(false);
+            }
         }
 
         if (e.getActionCommand().equals("Redo")) {
+
+            undo.setEnabled(true);
             mCounter++;
             imageLabel.setIcon(null);
             currentCustomImage.restore(caretaker.getMemento(mCounter));
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
-
-            if(mCounter == (caretaker.getMementosSize() - 1)){
-                redo.setEnabled(false);
-            }
 
             mementoFlag = true;
 
 
         }
 
+        if(mCounter == (caretaker.getMementosSize() - 1)){
+            redo.setEnabled(false);
+        }
 
+        if(mCounter > 0){
+            undo.setEnabled(true);
+        }
     }
 
 
