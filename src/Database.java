@@ -20,6 +20,7 @@ public class Database {
     public Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
+            // Here you have to add your own url and password for connection to database
             connection = DriverManager.getConnection("jdbc:mysql://localhost/gallery", "root", "Svakacast1");
 
             if (connection != null) {

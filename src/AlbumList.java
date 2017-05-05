@@ -66,7 +66,7 @@ public class AlbumList extends JFrame implements ActionListener{
 
             for(int i = 0; i < list.size(); i++) {
 
-                CustomImage cs = new CustomImage(new File("C:\\Users\\Tomislav\\Desktop\\Swen Gallery\\Swen\\src\\albumImage.jpg"));
+                CustomImage cs = new CustomImage(new File("C:\\Users\\Tomislav\\Desktop\\Swen Gallery\\Swen\\assets\\albumImage.jpg"));
                 JButton button = new JButton(cs.getRescaledImage(100,100));
 
 

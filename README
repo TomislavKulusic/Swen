@@ -1,0 +1,7 @@
+To run this program you need to create database first, here you have database.sql with tables needed.
+Also you have to setup the configuration for connection in Database class in getConnection method.
+After that if you dont have driver it will throw an error, so you have to import jdbc driver
+Link for download: https://dev.mysql.com/downloads/connector/j/5.1.html.
+
+There are still small bugs that needed to be fixed till final duedate but nothing that will affect workflow of
+program.
