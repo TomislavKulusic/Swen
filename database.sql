@@ -1,3 +1,6 @@
+create database gallery;
+use gallery;
+
 create table Album(
     album_id int NOT NULL AUTO_INCREMENT,
     album_name VARCHAR(25) not null,

@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +36,7 @@ public class AlbumList extends JFrame implements ActionListener{
     }
 
     public void createFrame() { // method for creating frame
-        setSize(500, 500);
+        setSize(700, 500);
         makeOptions();
 
         setVisible(true);
@@ -56,15 +57,20 @@ public class AlbumList extends JFrame implements ActionListener{
             panel.add(openAlbum);
             add(panel);
         } else {
-            setLayout(new GridLayout(0, 5));
+            JPanel title = new JPanel();
+            JLabel titleLabel = new JLabel("List of Albums");
+            JPanel buttonPannel = new JPanel(new GridLayout(0, 5));
             JPanel bottom = new JPanel();
             bottom.add(addAlbum);
 
 
             for(int i = 0; i < list.size(); i++) {
 
+                CustomImage cs = new CustomImage(new File("C:\\Users\\Tomislav\\Desktop\\Swen Gallery\\Swen\\src\\albumImage.jpg"));
+                JButton button = new JButton(cs.getRescaledImage(100,100));
 
-                JButton button = new JButton(list.get(i).albumName);
+
+                JLabel label = new JLabel(list.get(i).albumName);
                 Album album = list.get(i);
                 button.addActionListener(new ActionListener() {
                     @Override
@@ -75,10 +81,15 @@ public class AlbumList extends JFrame implements ActionListener{
                 });
 
                 JPanel panel = new JPanel();
-                panel.add(button);
-                this.add(panel,BorderLayout.NORTH);
-            }
 
+                panel.add(button);
+                panel.add(label,BorderLayout.SOUTH);
+                panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+                buttonPannel.add(panel);
+            }
+            this.add(title.add(titleLabel),BorderLayout.NORTH);
+            this.add(buttonPannel,BorderLayout.CENTER);
             add(bottom,BorderLayout.SOUTH);
 
         }
@@ -146,9 +157,9 @@ public class AlbumList extends JFrame implements ActionListener{
 
                 while(newRs.next()) {
                     String imageName = newRs.getString("image_path");
-
                     CustomImage custom = new CustomImage(new File(imageName));
                     album.addImages(custom);
+
                 }
 
                 albumList.add(album);

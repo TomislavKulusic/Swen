@@ -10,7 +10,7 @@ public class Save {
       try {
          BufferedImage img = image.getBufferedImage();
          System.out.println(image.getUrl());
-         ImageIO.write(img, "jpg", new File("edited" + image.getUrl()));
+         ImageIO.write(img, "jpg", new File("EditedPictures/edited" + image.getUrl()));
          
          return true;
       } catch(Exception e) {
