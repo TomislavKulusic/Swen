@@ -20,4 +20,12 @@ public class Caretaker {
         return mementos.size();
     }
 
+    public void wipeMementos(int from){
+
+        for(int i = (mementos.size()-1); i > from; i--){
+            mementos.remove(i);
+        }
+
+    }
+
 }

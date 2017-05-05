@@ -20,7 +20,7 @@ public class Database {
     public Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/gallery", "root", "Svakacast1");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/gallery", "root", "");
 
             if (connection != null) {
 
