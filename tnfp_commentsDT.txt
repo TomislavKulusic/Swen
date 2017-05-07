@@ -1,0 +1,9 @@
+More comments are needed. Some classes are completely without comments. Please do not be lazy. 
+
+I do not see Frano's nor Pieter's part of the code nor their commits.
+
+The code smells are more organisational. In other words, to fix the code high-level interventions are needed, i.e., 
+design patterns. However, some design patterns are already implemented and that is laudable.
+
+Altogether, you started well with the project, but a lot of it is still missing. You need to make a final push to 
+complete the project adequately and on time.
