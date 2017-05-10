@@ -14,6 +14,7 @@ public class Database {
 
     /**
      * This class is used to connect to database. To connect on your local database you need to change the parameters of getConnection();
+     *
      * @return
      */
 
@@ -21,7 +22,7 @@ public class Database {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             // Here you have to add your own url and password for connection to database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/gallery", "root", "Svakacast1");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/gallery", "root", "root");
 
             if (connection != null) {
 
@@ -38,12 +39,6 @@ public class Database {
 
         return connection;
     }
-
-
-
-
-
-
 
 
 }

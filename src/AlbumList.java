@@ -30,8 +30,6 @@ public class AlbumList extends JFrame implements ActionListener{
         Database database = new Database();
         connection = database.getConnection();
 
-
-
         createFrame();
     }
 

@@ -1,11 +1,11 @@
 import java.io.File;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-
 /**
  * Created by Tomislav on 5/2/2017.
+ * Swen final project
+ * Created in: 17 : 12
  */
 
 /**
@@ -14,7 +14,6 @@ import java.util.Calendar;
 
 public class DatabaseImages {
     private Connection connection;
-    private ArrayList<File> list;
 
     public DatabaseImages(Connection connection) {
         this.connection = connection;
@@ -27,55 +26,69 @@ public class DatabaseImages {
      */
     public void storeAlbums(String albumName) {
         Statement stmt = null;
+
         try {
             stmt = connection.createStatement();
-            String query = " insert into album (album_name) values (?)";
+
+            String query = "INSERT INTO album (album_name) VALUES (?)";
+
             PreparedStatement preparedStmt = connection.prepareStatement(query);
+
             preparedStmt.setString(1, albumName);
             preparedStmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     /***
      * This method is used to store images to the database
      * @param images collection of image paths
      */
-    public void storeImages(ArrayList<File> images) {
-        Statement stmt = null;
-        int numberRow = 0;
+    public void storeImages(ArrayList<File> images) { //TODO POPRAVIT OVO SMECE
+        String countQuery = "SELECT count(*) AS `RowCount` FROM album";
 
-        String countQuery = "select count(*) from album";
-        Calendar calendar = Calendar.getInstance();
-        java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
         try {
-            PreparedStatement ps = connection.prepareStatement(countQuery);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                numberRow = rs.getInt("count(*)");
-            }
-            System.out.print("Row count" + numberRow);
+            ResultSet rs = connection.prepareStatement(countQuery).executeQuery();
 
+            rs.next();
 
+            int numberRow = rs.getInt("RowCount");
 
+            for (File image : images) {
+                String query = "INSERT INTO Images (album_id, image_path, name, image_date, tag) VALUES (?, ?, ?, ?, ?)";
 
-        for (int i = 0; i < images.size(); i++) {
-
-
-
-                String query = "INSERT INTO Images (album_id,image_path,name,image_date,tag) VALUES (?,?,?,?,?)";
                 PreparedStatement preparedStmt = connection.prepareStatement(query);
+
                 preparedStmt.setInt(1, numberRow);
-                preparedStmt.setString(2, images.get(i).getAbsolutePath());
-                preparedStmt.setString(3,images.get(i).getName().split("-")[0]);
-                preparedStmt.setDate(4, startDate);
-                preparedStmt.setString(5, images.get(i).getName() + "tag");
+                preparedStmt.setString(2, image.getAbsolutePath());
+                preparedStmt.setString(3, image.getName().split("-")[0]);
+                preparedStmt.setDate(4, new Date(Calendar.getInstance().getTime().getTime()));
+                preparedStmt.setString(5, image.getName() + "tag");
                 preparedStmt.execute();
+            }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
 
+    /**
+     * @param image Image that you want to insert
+     * @param albumID ID of an album you want to insert in
+     */
+    public void addImage(File image, int albumID) {
+        String query = "INSERT INTO Images (album_id, image_path, name, image_date, tag) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+            preparedStmt.setInt(1, albumID);
+            preparedStmt.setString(2, image.getAbsolutePath());
+            preparedStmt.setString(3, image.getName().split("-")[0]);
+            preparedStmt.setDate(4, new Date(Calendar.getInstance().getTime().getTime()));
+            preparedStmt.setString(5, image.getName() + "tag");
+            preparedStmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,17 +102,16 @@ public class DatabaseImages {
         ArrayList<CustomImage> list = new ArrayList<CustomImage>();
 
         String query = "SELECT * FROM images";
+
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
-
                 String path = rs.getString("image_path");
                 String date = rs.getString("image_date");
                 String tag = rs.getString("tag");
                 String name = rs.getString("name");
-
 
                 CustomImage image = new CustomImage(new File(path));
                 image.addTag(tag);
@@ -109,8 +121,8 @@ public class DatabaseImages {
 
                 // print the results
             } // while
-            st.close();
 
+            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
