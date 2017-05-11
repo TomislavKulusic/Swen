@@ -1,21 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
 
-//s
+/**
+ * Resize the image
+ */
 class Resize {
 
-    private CustomImage customImage;
-
+    /**
+     * Resize the image
+     *
+     * @param img    CustomImage image that needs to be saved
+     * @param width  Width of image
+     * @param height Height of image
+     */
     Resize(CustomImage img, int width, int height) {
-        customImage = img;
-
-        resize(width, height);
+        img.setImage(new ImageIcon(img.getBufferedImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        img.setBufferedFromImage();
     }
 
-    private void resize(int w, int h) {
-        Image im = customImage.getBufferedImage().getScaledInstance(w, h, Image.SCALE_DEFAULT);
-
-        customImage.setImage(new ImageIcon(im));
-        customImage.setBufferedFromImage();
-    }
 }

@@ -116,7 +116,7 @@ public class AlbumList extends JFrame implements ActionListener {
             dbimg.storeImages(files);
 
             Album album = new Album(albumName);
-            album.setImages(loader.getImages(files));
+            album.setImages(loader.getImages());
 
             new ImageView(album, connection);
 

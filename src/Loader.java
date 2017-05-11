@@ -6,32 +6,36 @@ import java.util.Arrays;
  * Created by Nikola on 26.04.2017..
  * Swen final project
  * Created in: 21 : 56
+ *
+ * Loads all images
  */
 class Loader {
 
-    private File directory;
+    private ArrayList<File> files;
 
+    /**
+     * @param filePath
+     */
     Loader(String filePath) {
-        directory = new File(filePath);
+        this.files = new ArrayList<>(Arrays.asList(new File(filePath).listFiles()));
     }
 
-    ArrayList<File> getFiles() {
-        return new ArrayList<>(Arrays.asList(directory.listFiles()));
-    }
-
-    ArrayList<CustomImage> getImages(ArrayList<File> files) {
+    ArrayList<CustomImage> getImages() {
         ArrayList<CustomImage> customImages = new ArrayList<>();
 
-        for (File file : files) {
+        for (File file : files)
             try {
                 CustomImage customImage = new CustomImage(file);
 
                 customImages.add(customImage);
             } catch (Exception ignored) {
             }
-        }
 
         return customImages;
+    }
+
+    ArrayList<File> getFiles() {
+        return files;
     }
 
 }
