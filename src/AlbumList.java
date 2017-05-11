@@ -25,6 +25,7 @@ public class AlbumList extends JFrame implements ActionListener{
     private ArrayList<Album> list;
     private DatabaseImages dbimg;
     private Loader loader;
+    private String albumName;
 
     public AlbumList() { // This class calls the Database class and connects to database
         Database database = new Database();
@@ -65,7 +66,7 @@ public class AlbumList extends JFrame implements ActionListener{
 
             for(int i = 0; i < list.size(); i++) {
 
-                CustomImage cs = new CustomImage(new File("C:\\Users\\Tomislav\\Desktop\\Swen Gallery\\Swen\\assets\\albumImage.jpg"));
+                CustomImage cs = new CustomImage(new File("assets\\albumImage.jpg"));
                 JButton button = new JButton(cs.getRescaledImage(100,100));
 
 
@@ -74,7 +75,7 @@ public class AlbumList extends JFrame implements ActionListener{
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                       ImageView iv = new ImageView(getAlbumImages(album),connection,album.getAlbumName());
+                       new ImageView(getAlbumImages(album),connection,album.getAlbumName());
 
                     }
                 });
@@ -109,15 +110,23 @@ public class AlbumList extends JFrame implements ActionListener{
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             loader = new Loader(jfc.getSelectedFile().getAbsolutePath());
             files = loader.getFiles();
+
+            dbimg = new DatabaseImages(connection);
+                albumName = JOptionPane.showInputDialog(this, "Set Album Name");
+                if (albumName == null) {
+                    return;
+                }
+            dbimg.storeAlbums(albumName);
+            dbimg.storeImages(files);
+
+            new ImageView(loader.getImages(files),connection,albumName);
+
+        }else if (returnVal == JFileChooser.CANCEL_OPTION) {
+            System.out.println("Cancel was selected");
+
         }
 
-        dbimg = new DatabaseImages(connection);
-        String albumName =  JOptionPane.showInputDialog(this, "Set Album Name");
-        dbimg.storeAlbums(albumName);
-        dbimg.storeImages(files);
 
-
-        ImageView iv = new ImageView(loader.getImages(files),connection,albumName);
         //this.dispose();
 
 

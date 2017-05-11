@@ -27,10 +27,7 @@ public class ImageView {
         frame = new JFrame();
 
 
-        //frame.setLayout(new GridLayout(0, 5));
-        //frame.setSize(500,500);
         frame.setLocationRelativeTo(null);
-        //frame.setResizable(false);
         populateGrid(customImages);
         searchPanel();
 
@@ -97,7 +94,7 @@ public class ImageView {
         } else {
 
             try {
-            String query = "select images.* from Album,images where Album.album_name = ?";
+            String query = "SELECT image_path, tag FROM images LEFT JOIN album ON album.album_id = images.album_id WHERE Album.album_name = ?";
 
                 PreparedStatement newStat = connection.prepareStatement(query);
                 newStat.setString(1, albumName);
