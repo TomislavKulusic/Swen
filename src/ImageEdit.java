@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.Connection;
 
-/***
+/**
  * This class is for editing the pictures
- *///s
+ */
 public class ImageEdit extends JFrame implements ActionListener {
 
     private JLabel imageLabel;
@@ -23,11 +23,12 @@ public class ImageEdit extends JFrame implements ActionListener {
     private int mCounter = 0;
 
 
-    /***
+    /**
      * Parametrized constructor which accepts the Custom image and database connection
-     * @param img
-     * @param connection
-     * @throws IOException
+     *
+     * @param img CustomImage that will be edited
+     * @param connection Connection to the database
+     * @throws IOException If edit fails
      */
     ImageEdit(CustomImage img, Connection connection) throws IOException {
         this.connection = connection;
@@ -41,6 +42,9 @@ public class ImageEdit extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Sets the view to fit window
+     */
     private void setImageView() {
         setSize(500, 500);
 
@@ -55,7 +59,7 @@ public class ImageEdit extends JFrame implements ActionListener {
 
     /***
      * This class is used to load image to new frame
-     * @param img
+     * @param img Image to load
      */
     private void loadImage(CustomImage img) {
         imageLabel.setIcon(img.getRescaledImage(450, 370));
@@ -65,6 +69,9 @@ public class ImageEdit extends JFrame implements ActionListener {
         System.out.println("Current Image height: " + img.getHeight() + " Current width: " + img.getWidth());
     }
 
+    /**
+     * Initializes the toolbar
+     */
     private void toolbar() {
         JButton resize = new JButton("Resize");
         JButton flip = new JButton("Flip");
@@ -107,7 +114,7 @@ public class ImageEdit extends JFrame implements ActionListener {
 
     /***
      * Here we handle all on click commands and depending on click a different action will be invoked
-     * @param e
+     * @param e ActionEvent
      */
     public void actionPerformed(ActionEvent e) {
         if (!e.getActionCommand().equals("Redo") && !e.getActionCommand().equals("Undo")) {
@@ -198,6 +205,5 @@ public class ImageEdit extends JFrame implements ActionListener {
         if (mCounter > 0)
             undo.setEnabled(true);
     }
-
 
 }

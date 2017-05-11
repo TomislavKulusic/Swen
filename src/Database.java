@@ -14,7 +14,7 @@ public class Database {
     /**
      * This class is used to connect to database. To connect on your local database you need to change the parameters of getConnection();
      *
-     * @return
+     * @return Connection to database
      */
     Connection getConnection() {
         try {

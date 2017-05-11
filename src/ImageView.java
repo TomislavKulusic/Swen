@@ -24,6 +24,12 @@ class ImageView {
     private String albumName;
     private int albumId;
 
+    /**
+     * Constructor
+     *
+     * @param album      Accepts album
+     * @param connection Connection to database
+     */
     ImageView(Album album, Connection connection) {
         this.connection = connection;
         this.customImages = album.getImages();
@@ -39,6 +45,9 @@ class ImageView {
         frame.setVisible(true);
     }
 
+    /**
+     * @param customImages Array of images that need to be populated
+     */
     private void populateGrid(ArrayList<CustomImage> customImages) {
         for (CustomImage customImage : customImages) {
             JButton imageIcon = new JButton(customImage.getRescaledImage(100, 100));
@@ -58,6 +67,9 @@ class ImageView {
         imageGrid.revalidate();
     }
 
+    /**
+     * Creates search panel with also add image button
+     */
     private void searchPanel() {
         JLabel label = new JLabel("Search picture by tag");
         JTextField search = new JTextField(5);
@@ -106,6 +118,11 @@ class ImageView {
         frame.add(bottomPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Searches the database for tags
+     *
+     * @param tag Tag that needs to be searched
+     */
     private void search(String tag) {
         ArrayList<CustomImage> newList = new ArrayList<>();
         String tagArray[];
@@ -125,18 +142,18 @@ class ImageView {
                     String imageName = newRs.getString("image_path");
                     String iTag = newRs.getString("tag");
                     CustomImage custom = new CustomImage(new File(imageName));
+
                     custom.addTag(iTag);
                     tagArray = custom.getTag().split(",");
 
-                    for (String aTagArray : tagArray) {
-                        if (aTagArray.equals(tag)) {
+                    for (String aTagArray : tagArray)
+                        if (aTagArray.equals(tag))
                             newList.add(custom);
-                        }
-                    }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             populateGrid(newList);
         }
     }

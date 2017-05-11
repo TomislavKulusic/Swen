@@ -12,7 +12,7 @@ class Caretaker {
 
     /**
      * Add an image state memento to an array list of mementos
-     * @param m
+     * @param m ImageMemento
      */
     void addMemento(ImageMemento m) {
         mementos.add(m);

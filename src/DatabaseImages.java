@@ -6,7 +6,6 @@ import java.util.Calendar;
 /**
  * This class is mostly used to get all informations from database and also to store changes to database
  */
-
 public class DatabaseImages {
     private Connection connection;
 
@@ -17,7 +16,7 @@ public class DatabaseImages {
 
     /***
      * This method is used to store new albums to database
-     * @param albumName
+     * @param albumName Name of the album
      */
     void storeAlbums(String albumName) {
         try {
@@ -88,7 +87,7 @@ public class DatabaseImages {
 
     /***
      * Here we get all images from database
-     * @return
+     * @return ArrayList of images from database
      */
     public ArrayList<CustomImage> getImagesFromDatabase() {
         ArrayList<CustomImage> list = new ArrayList<CustomImage>();

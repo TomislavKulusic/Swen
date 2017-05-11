@@ -1,12 +1,13 @@
 import java.io.IOException;
 import java.sql.Connection;
 
-public class Controller {
+class Controller {
 
     /**
      * Default constructor
      */
-    public Controller() {}
+    Controller() {
+    }
 
     /**
      * Save an image

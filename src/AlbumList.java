@@ -145,7 +145,7 @@ public class AlbumList extends JFrame implements ActionListener {
      * @return returns the collection of albums
      */
     private ArrayList<Album> getAlbums() {
-        ArrayList<Album> albumList = new ArrayList<Album>();
+        ArrayList<Album> albumList = new ArrayList<>();
         String query = "SELECT * FROM album";
 
         try {
