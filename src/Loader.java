@@ -4,49 +4,34 @@ import java.util.Arrays;
 
 /**
  * Created by Nikola on 26.04.2017..
+ * Swen final project
+ * Created in: 21 : 56
  */
-public class Loader {
+class Loader {
 
-    String filePath;//s
-    File directory;
-    ArrayList<File> files;
+    private File directory;
 
-    public Loader(String filePath){
-
-        this.filePath = filePath;
+    Loader(String filePath) {
         directory = new File(filePath);
-
-
     }
 
-    public ArrayList<File> getFiles(){
-
-        files = new ArrayList<File>(Arrays.asList(directory.listFiles()));
-        return files;
-
+    ArrayList<File> getFiles() {
+        return new ArrayList<File>(Arrays.asList(directory.listFiles()));
     }
 
-    public ArrayList<CustomImage> getImages(ArrayList<File> files){
-
+    ArrayList<CustomImage> getImages(ArrayList<File> files) {
         ArrayList<CustomImage> customImages = new ArrayList<>();
 
-        for(int i = 0; i < files.size(); i++){
-
+        for (File file : files) {
             try {
-
-                CustomImage customImage = new CustomImage(files.get(i));
+                CustomImage customImage = new CustomImage(file);
 
                 customImages.add(customImage);
-
-
-            } catch (Exception e) {
-                
+            } catch (Exception ignored) {
             }
         }
 
         return customImages;
-
-
     }
 
 }

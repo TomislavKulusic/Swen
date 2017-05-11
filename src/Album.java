@@ -1,31 +1,33 @@
 import java.util.ArrayList;
 
-/**s
+/**
  * Created by Tomislav on 5/4/2017.
+ * Swen final project
+ * Created in: 22 : 05
  */
 public class Album {
 
-    public ArrayList<CustomImage> images = new ArrayList<>();
+    private ArrayList<CustomImage> images = new ArrayList<>();
     private String albumName;
     private int albumId;
 
-    public Album(String albumName) {
+    Album(String albumName) {
         this.albumName = albumName;
     }
 
-    public void addImages(CustomImage image) {
+    void addImages(CustomImage image) {
         images.add(image);
     }
 
-    public ArrayList<CustomImage> getImages() {
+    ArrayList<CustomImage> getImages() {
         return images;
     }
 
-    public void setImages(ArrayList<CustomImage> images) {
+    void setImages(ArrayList<CustomImage> images) {
         this.images = images;
     }
 
-    public String getAlbumName() {
+    String getAlbumName() {
         return albumName;
     }
 
@@ -33,11 +35,11 @@ public class Album {
         this.albumName = albumName;
     }
 
-    public int getAlbumId() {
+    int getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(int albumId) {
+    void setAlbumId(int albumId) {
         this.albumId = albumId;
     }
 }

@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Tomislav on 5/4/2017.
- */
-
-/**
+ * Swen final project
+ * Created in: 22 : 06
+ * <p>
  * This class is used used to load the albums and pictures to the database, it is
  * also main method.
  */
@@ -26,7 +26,7 @@ public class AlbumList extends JFrame implements ActionListener {
     private Loader loader;
     private String albumName;
 
-    public AlbumList() { // This class calls the Database class and connects to database
+    private AlbumList() { // This class calls the Database class and connects to database
         Database database = new Database();
         connection = database.getConnection();
 
@@ -37,7 +37,7 @@ public class AlbumList extends JFrame implements ActionListener {
         new AlbumList();
     }
 
-    public void createFrame() { // method for creating frame
+    private void createFrame() { // method for creating frame
         setSize(700, 500);
         makeOptions();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -49,12 +49,13 @@ public class AlbumList extends JFrame implements ActionListener {
      * This method is used to create the option for loading new album and also if there is already album
      * loaded before it will display it and you can click on it and display pictures.
      */
-    public void makeOptions() {
+    private void makeOptions() {
         JButton openAlbum = new JButton("Open Album");
         JButton addAlbum = new JButton("Open new Album");
         openAlbum.addActionListener(this);
         addAlbum.addActionListener(this);
         list = getAlbums();
+
         if (list.size() == 0) {
             JPanel panel = new JPanel();
             panel.add(openAlbum);
@@ -65,7 +66,6 @@ public class AlbumList extends JFrame implements ActionListener {
             JPanel buttonPannel = new JPanel(new GridLayout(0, 5));
             JPanel bottom = new JPanel();
             bottom.add(addAlbum);
-
 
             for (Album aList : list) {
                 CustomImage cs = new CustomImage(new File("assets\\albumImage.jpg"));
@@ -82,10 +82,10 @@ public class AlbumList extends JFrame implements ActionListener {
 
                 buttonPannel.add(panel);
             }
+
             this.add(title.add(titleLabel), BorderLayout.NORTH);
             this.add(buttonPannel, BorderLayout.CENTER);
             add(bottom, BorderLayout.SOUTH);
-
         }
 
 
@@ -94,7 +94,7 @@ public class AlbumList extends JFrame implements ActionListener {
     /**
      * Method with file chooser object, here after choosing the file we send all the pictures to the database
      */
-    public void chooseAlbum() {
+    private void chooseAlbum() {
         JFileChooser jfc = new JFileChooser();
         jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         File workingDirectory = new File(System.getProperty("user.dir"));
@@ -135,9 +135,10 @@ public class AlbumList extends JFrame implements ActionListener {
 
     /**
      * This method gets all data from database and from thoes informations crates the album model
+     *
      * @return returns the collection of albums
      */
-    public ArrayList<Album> getAlbums() {
+    private ArrayList<Album> getAlbums() {
         ArrayList<Album> albumList = new ArrayList<Album>();
         String query = "SELECT * FROM album";
 
@@ -186,5 +187,53 @@ public class AlbumList extends JFrame implements ActionListener {
      */
     public ArrayList<CustomImage> getAlbumImages(Album album) {
         return album.getImages();
+    }
+
+    public ArrayList<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(ArrayList<File> files) {
+        this.files = files;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public ArrayList<Album> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<Album> list) {
+        this.list = list;
+    }
+
+    public DatabaseImages getDbimg() {
+        return dbimg;
+    }
+
+    public void setDbimg(DatabaseImages dbimg) {
+        this.dbimg = dbimg;
+    }
+
+    public Loader getLoader() {
+        return loader;
+    }
+
+    public void setLoader(Loader loader) {
+        this.loader = loader;
+    }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
     }
 }

@@ -1,30 +1,30 @@
 import java.util.ArrayList;
 
-/**s
+/**
  * Created by Nikola on 04.05.2017..
+ * Swen final project
+ * Created in: 22 : 07
  */
-public class Caretaker {
+class Caretaker {
 
     private ArrayList<ImageMemento> mementos = new ArrayList<>();
 
-    public void addMemento(ImageMemento m){
+    void addMemento(ImageMemento m) {
         mementos.add(m);
     }
 
-    public ImageMemento getMemento(int i){
+    ImageMemento getMemento(int i) {
         return mementos.get(i);
     }
 
-    public int getMementosSize(){
+    int getMementosSize() {
         return mementos.size();
     }
 
-    public void wipeMementos(int from){
-
+    void wipeMementos(int from) {
         for(int i = (mementos.size()-1); i > from; i--){
             mementos.remove(i);
         }
-
     }
 
 }

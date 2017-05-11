@@ -1,20 +1,13 @@
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
-//s
-public class Save {
+class Save {
 
-   public boolean Save(CustomImage image) {
-      try {
-         BufferedImage img = image.getBufferedImage();
-         System.out.println(image.getUrl());
-         ImageIO.write(img, "jpg", new File("EditedPictures/edited" + image.getUrl()));
-         
-         return true;
-      } catch(Exception e) {
-         return false;
-      }
-   }
-     
+    Save(CustomImage image) throws IOException {
+        new File("Edited Images").mkdir();
+
+        ImageIO.write(image.getBufferedImage(), "jpg", new File("Edited Images" + image.getUrl()));
+    }
+
 }

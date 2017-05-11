@@ -12,17 +12,19 @@ import java.util.ArrayList;
 
 /**
  * Created by Nikola on 26.04.2017..
+ * Swen final project
+ * Created in: 21 : 53
  */
-public class ImageView {
+class ImageView {
 
-    public static JFrame frame;
+    static JFrame frame;
     private ArrayList<CustomImage> customImages;
     private Connection connection;
     private JPanel imageGrid = new JPanel(new GridLayout(0, 5));
     private String albumName;
     private int albumId;
 
-    public ImageView(Album album, Connection connection) {
+    ImageView(Album album, Connection connection) {
         this.connection = connection;
         this.customImages = album.getImages();
         this.albumName = album.getAlbumName();
@@ -57,7 +59,7 @@ public class ImageView {
         imageGrid.revalidate();
     }
 
-    public void searchPanel() {
+    private void searchPanel() {
         JLabel label = new JLabel("Search picture by tag");
         JTextField search = new JTextField(5);
         JButton searchButton = new JButton("Search");
@@ -105,7 +107,7 @@ public class ImageView {
         frame.add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    public void search(String tag) {
+    private void search(String tag) {
         ArrayList<CustomImage> newList = new ArrayList<>();
         String tagArray[];
         imageGrid.removeAll();
@@ -118,8 +120,7 @@ public class ImageView {
 
                 PreparedStatement newStat = connection.prepareStatement(query);
                 newStat.setString(1, albumName);
-                ResultSet newRs = null;
-                newRs = newStat.executeQuery();
+                ResultSet newRs = newStat.executeQuery();
 
                 while (newRs.next()) {
                     String imageName = newRs.getString("image_path");

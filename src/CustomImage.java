@@ -12,12 +12,10 @@ import java.io.IOException;
 public class CustomImage {
 
     public ImageIcon image;
-    public int height;
-    public int width;
-    public File file;
-    public BufferedImage img;
-    public String tag = "";
-    public String name;
+    private File file;
+    private BufferedImage img;
+    private String tag = "";
+    private String name;
     private String path;
 
     public CustomImage(File imageFile) {
@@ -33,11 +31,11 @@ public class CustomImage {
         }
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -49,50 +47,43 @@ public class CustomImage {
         this.image = image;
     }
 
-    public ImageIcon getRescaledImage(int width, int height) {
+    ImageIcon getRescaledImage(int width, int height) {
         return new ImageIcon(image.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH));
     }
 
-    public int getHeight() {
+    int getHeight() {
         return image.getIconHeight();
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWidth() {
+    int getWidth() {
         return image.getIconWidth();
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public BufferedImage getBufferedImage() {
+    BufferedImage getBufferedImage() {
         return img;
     }
 
-    public void setBuffered(BufferedImage img) {
+    void setBuffered(BufferedImage img) {
         this.img = img;
     }
 
-    public void setBufferedFromImage() {
+    void setBufferedFromImage() {
         img = new BufferedImage(image.getIconWidth(), image.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+
         Graphics g = img.createGraphics();
         image.paintIcon(null, g, 0, 0);
         g.dispose();
     }
 
-    public String getUrl() {
+    String getUrl() {
         return file.getName();
     }
 
-    public void addTag(String addTag) {
+    void addTag(String addTag) {
         tag = tag + addTag + ",";
     }
 
-    public String getTag() {
+    String getTag() {
         return tag;
     }
 
@@ -100,11 +91,11 @@ public class CustomImage {
         this.tag = tag;
     }
 
-    public ImageMemento save() {
+    ImageMemento save() {
         return new ImageMemento(getImage());
     }
 
-    public void restore(ImageMemento m) {
+    void restore(ImageMemento m) {
         image = m.getState();
         setBufferedFromImage();
 
@@ -126,7 +117,11 @@ public class CustomImage {
         this.img = img;
     }
 
-    public String getPath() {
+    String getPath() {
         return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

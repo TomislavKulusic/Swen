@@ -10,7 +10,6 @@ import java.sql.Connection;
  *///s
 public class ImageEdit extends JFrame implements ActionListener {
 
-    private JPanel pictureView;
     private JLabel imageLabel;
     private CustomImage currentCustomImage;
     private JLabel heightLabel;
@@ -30,8 +29,7 @@ public class ImageEdit extends JFrame implements ActionListener {
      * @param connection
      * @throws IOException
      */
-    public ImageEdit(CustomImage img, Connection connection) throws IOException {
-
+    ImageEdit(CustomImage img, Connection connection) throws IOException {
         this.connection = connection;
         setImageView();
 
@@ -44,36 +42,31 @@ public class ImageEdit extends JFrame implements ActionListener {
 
     }
 
-    public void setImageView() {
-
+    private void setImageView() {
         setSize(500, 500);
 
+        JPanel pictureView = new JPanel();
 
-        pictureView = new JPanel();
         imageLabel = new JLabel();
+
         pictureView.add(imageLabel);
 
         add(pictureView);
-
-
     }
 
     /***
      * This class is used to load image to new frame
      * @param img
      */
-    public void loadImage(CustomImage img) {
+    private void loadImage(CustomImage img) {
         imageLabel.setIcon(img.getRescaledImage(450, 370));
 
         currentCustomImage = img;
         caretaker.addMemento(currentCustomImage.save());
         System.out.println("Current Image height: " + img.getHeight() + " Current width: " + img.getWidth());
-
     }
 
-    public void toolbar() {
-
-
+    private void toolbar() {
         JButton resize = new JButton("Resize");
         JButton flip = new JButton("Flip");
         JButton rotate = new JButton("Rotate");
@@ -118,24 +111,24 @@ public class ImageEdit extends JFrame implements ActionListener {
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
-
-        if(!e.getActionCommand().equals("Redo") && !e.getActionCommand().equals("Undo")){
-            if(mCounter != (caretaker.getMementosSize() - 1)){
+        if (!e.getActionCommand().equals("Redo") && !e.getActionCommand().equals("Undo")) {
+            if (mCounter != (caretaker.getMementosSize() - 1)) {
                 System.out.println("Wiped");
                 caretaker.wipeMementos(mCounter);
                 currentCustomImage.restore(caretaker.getMemento(mCounter));
             }
         }
 
-
         if (e.getActionCommand().equals("Resize")) {
             mCounter++;
             String width = JOptionPane.showInputDialog(this, "Set new width");
             String height = JOptionPane.showInputDialog(this, "Set new height");
-            if(width == null || height == null){
+
+            if (width == null || height == null) {
                 mCounter--;
                 return;
             }
+
             controller.Resize(currentCustomImage, Integer.parseInt(width), Integer.parseInt(height));
             imageLabel.setIcon(null);
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
@@ -145,12 +138,9 @@ public class ImageEdit extends JFrame implements ActionListener {
             heightLabel.setText("Current height: " + Integer.toString(currentCustomImage.getHeight()));
 
             caretaker.addMemento(currentCustomImage.save());
-
-
         }
 
         if (e.getActionCommand().equals("Flip")) {
-
             mCounter++;
 
             controller.Flip(currentCustomImage);
@@ -159,16 +149,13 @@ public class ImageEdit extends JFrame implements ActionListener {
 
             imageLabel.setIcon(null);
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
-
         }
 
-        if (e.getActionCommand().equals("Save")) {
-            if (controller.Save(currentCustomImage)) {
+        if (e.getActionCommand().equals("Save"))
+            if (controller.Save(currentCustomImage))
                 System.out.print("Image Saved");
-            } else {
+            else
                 System.out.print("Failed to Save image");
-            }
-        }
 
         if (e.getActionCommand().equals("Rotate")) {
             mCounter++;
@@ -178,20 +165,15 @@ public class ImageEdit extends JFrame implements ActionListener {
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
 
             caretaker.addMemento(currentCustomImage.save());
-
-
         }
 
         if (e.getActionCommand().equals("Add Tag")) {
             String name = JOptionPane.showInputDialog(this, "Add tag");
 
             controller.addTag(name, connection, currentCustomImage.getTag(), currentCustomImage.getName());
-
-
         }
 
         if (e.getActionCommand().equals("Undo")) {
-
             redo.setEnabled(true);
             mCounter--;
             imageLabel.setIcon(null);
@@ -199,13 +181,11 @@ public class ImageEdit extends JFrame implements ActionListener {
             currentCustomImage.restore(caretaker.getMemento(mCounter));
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
 
-            if(mCounter == 0){
+            if (mCounter == 0)
                 undo.setEnabled(false);
-            }
         }
 
         if (e.getActionCommand().equals("Redo")) {
-
             undo.setEnabled(true);
             mCounter++;
             imageLabel.setIcon(null);
@@ -213,13 +193,11 @@ public class ImageEdit extends JFrame implements ActionListener {
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
         }
 
-        if(mCounter == (caretaker.getMementosSize() - 1)){
+        if (mCounter == (caretaker.getMementosSize() - 1))
             redo.setEnabled(false);
-        }
 
-        if(mCounter > 0){
+        if (mCounter > 0)
             undo.setEnabled(true);
-        }
     }
 
 

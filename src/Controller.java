@@ -1,52 +1,45 @@
+import java.io.IOException;
 import java.sql.Connection;
 
 public class Controller {
 
-    Save save = new Save();
-    Resize resize = new Resize();
-    Flip flip = new Flip();
-    Rotate rotate = new Rotate();
-    AddTag addtag = new AddTag();
-
-
-    CustomImage customImage;
+    private CustomImage customImage;
 
     public Controller() {
 
     }
 
     public Controller(CustomImage customImage) {
-
         this.customImage = customImage;
-
     }
 
+    boolean Save(CustomImage img) {
+        try {
+            new Save(img);
+            return true;
 
-    public boolean Save(CustomImage img) {
-
-        return save.Save(img);
-
+        } catch (IOException e) {
+            return false;
+        }
     }
 
-    public void Resize(CustomImage img, int width, int height) {
-
-        resize.Resize(img, width, height);
-
+    void Resize(CustomImage img, int width, int height) {
+        new Resize(img, width, height);
     }
 
-    public void Flip(CustomImage img) {
-
-        flip.Flip(img);
-
+    void Flip(CustomImage img) {
+        new Flip(img);
     }
 
-    public void Rotate(CustomImage img) {
-        rotate.Rotate(img);
+    void Rotate(CustomImage img) {
+        new Rotate(img);
     }
 
-    public void addTag(String tag, Connection connection, String tags, String name) {
-        addtag.AddTag(tag, connection, tags, name);
+    void addTag(String tag, Connection connection, String tags, String name) {
+        new AddTag(tag, connection, tags, name);
     }
 
-
+    public void setCustomImage(CustomImage customImage) {
+        this.customImage = customImage;
+    }
 }
