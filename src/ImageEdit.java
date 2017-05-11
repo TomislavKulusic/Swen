@@ -121,7 +121,7 @@ public class ImageEdit extends JFrame implements ActionListener {
     }
 
     /***
-     * Here we hanle all on click commands and depending on click the different action will be invoked
+     * Here we handle all on click commands and depending on click a different action will be invoked
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
@@ -137,9 +137,13 @@ public class ImageEdit extends JFrame implements ActionListener {
 
         if (e.getActionCommand().equals("Resize")) {
             mCounter++;
-            int width = Integer.parseInt(JOptionPane.showInputDialog(this, "Set new width"));
-            int height = Integer.parseInt(JOptionPane.showInputDialog(this, "Set new height"));
-            controller.Resize(currentCustomImage, width, height);
+            String width = JOptionPane.showInputDialog(this, "Set new width");
+            String height = JOptionPane.showInputDialog(this, "Set new height");
+            if(width == null || height == null){
+                mCounter--;
+                return;
+            }
+            controller.Resize(currentCustomImage, Integer.parseInt(width), Integer.parseInt(height));
             imageLabel.setIcon(null);
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
             widthLabel.setText(null);
