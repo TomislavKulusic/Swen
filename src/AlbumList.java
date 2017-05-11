@@ -26,6 +26,9 @@ public class AlbumList extends JFrame implements ActionListener {
     private Loader loader;
     private String albumName;
 
+    /**
+     * Default constructor
+     */
     private AlbumList() { // This class calls the Database class and connects to database
         Database database = new Database();
         connection = database.getConnection();
@@ -37,6 +40,9 @@ public class AlbumList extends JFrame implements ActionListener {
         new AlbumList();
     }
 
+    /**
+     * Creates the Album chooser frame
+     */
     private void createFrame() { // method for creating frame
         setSize(700, 500);
         makeOptions();

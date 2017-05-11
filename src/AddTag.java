@@ -13,6 +13,12 @@ import java.sql.SQLException;
  */
 class AddTag {
 
+    /**
+     * @param tag New tag name
+     * @param connection Database connection object
+     * @param tags Existing image tags
+     * @param name Image name
+     */
     AddTag(String tag, Connection connection, String tags, String name) {
         try {
             String newTag = tags + tag;

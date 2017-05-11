@@ -11,10 +11,16 @@ public class Album {
     private String albumName;
     private int albumId;
 
+    /**
+     * @param albumName
+     */
     Album(String albumName) {
         this.albumName = albumName;
     }
 
+    /** Add an image to the album
+     * @param image
+     */
     void addImages(CustomImage image) {
         images.add(image);
     }
@@ -23,22 +29,37 @@ public class Album {
         return images;
     }
 
+    /**
+     * @param images
+     */
     void setImages(ArrayList<CustomImage> images) {
         this.images = images;
     }
 
+    /**
+     * @return
+     */
     String getAlbumName() {
         return albumName;
     }
 
+    /**
+     * @param albumName
+     */
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
     }
 
+    /**
+     * @return
+     */
     int getAlbumId() {
         return albumId;
     }
 
+    /**
+     * @param albumId
+     */
     void setAlbumId(int albumId) {
         this.albumId = albumId;
     }

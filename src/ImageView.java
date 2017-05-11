@@ -32,7 +32,6 @@ class ImageView {
 
         frame = new JFrame();
 
-        frame.setLocationRelativeTo(null);
         populateGrid(customImages);
         searchPanel();
 
