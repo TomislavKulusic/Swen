@@ -17,8 +17,7 @@ public class AddTag {
 
         try {
             newTag = tags + tag;
-            System.out.println(newTag);
-            System.out.println(name);
+
             String query = "update images set tag = ? where name = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, newTag);

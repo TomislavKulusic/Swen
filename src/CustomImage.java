@@ -23,7 +23,7 @@ public class CustomImage {
 
       this.file = imageFile;
       this.image = new ImageIcon(imageFile.toString());
-
+      this.name = imageFile.getName().split("-")[0];
 
 
       try {

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 public class Album {
 
     public String albumName;
+    public int albumId;
+
     public ArrayList<CustomImage> images = new ArrayList<CustomImage>();
 
     public Album(String albumName) {
@@ -18,5 +20,13 @@ public class Album {
 
     public ArrayList<CustomImage> getImages() {
         return images;
+    }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public int getAlbumId() {
+        return albumId;
     }
 }

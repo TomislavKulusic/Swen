@@ -47,7 +47,7 @@ public class DatabaseImages {
      */
     public void storeImages(ArrayList<File> images) { //TODO POPRAVIT OVO SMECE
         String countQuery = "SELECT count(*) AS `RowCount` FROM album";
-
+        int i = 1;
         try {
             ResultSet rs = connection.prepareStatement(countQuery).executeQuery();
 
@@ -64,8 +64,9 @@ public class DatabaseImages {
                 preparedStmt.setString(2, image.getAbsolutePath());
                 preparedStmt.setString(3, image.getName().split("-")[0]);
                 preparedStmt.setDate(4, new Date(Calendar.getInstance().getTime().getTime()));
-                preparedStmt.setString(5, image.getName() + "tag");
+                preparedStmt.setString(5, "image"+i);
                 preparedStmt.execute();
+                i++;
             }
 
         } catch (SQLException e) {

@@ -36,6 +36,7 @@ public class AlbumList extends JFrame implements ActionListener{
     public void createFrame() { // method for creating frame
         setSize(700, 500);
         makeOptions();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setVisible(true);
     }
@@ -73,7 +74,7 @@ public class AlbumList extends JFrame implements ActionListener{
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                       ImageView iv = new ImageView(getAlbumImages(album),connection);
+                       ImageView iv = new ImageView(getAlbumImages(album),connection,album.getAlbumName());
 
                     }
                 });
@@ -116,8 +117,8 @@ public class AlbumList extends JFrame implements ActionListener{
         dbimg.storeImages(files);
 
 
-        ImageView iv = new ImageView(loader.getImages(files),connection);
-        this.dispose();
+        ImageView iv = new ImageView(loader.getImages(files),connection,albumName);
+        //this.dispose();
 
 
     }
@@ -155,7 +156,9 @@ public class AlbumList extends JFrame implements ActionListener{
 
                 while(newRs.next()) {
                     String imageName = newRs.getString("image_path");
+                    String tagName = newRs.getString("tag");
                     CustomImage custom = new CustomImage(new File(imageName));
+                    custom.addTag(tagName);
                     album.addImages(custom);
 
                 }
