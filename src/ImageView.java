@@ -121,7 +121,6 @@ public class ImageView {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
             populateGrid(newList);
         }
     }

@@ -25,7 +25,6 @@ public class AddTag {
 
             preparedStmt.executeUpdate();
 
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
