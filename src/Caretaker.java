@@ -1,7 +1,6 @@
-import java.awt.*;
 import java.util.ArrayList;
 
-/**
+/**s
  * Created by Nikola on 04.05.2017..
  */
 public class Caretaker {

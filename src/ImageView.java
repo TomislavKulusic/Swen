@@ -12,11 +12,12 @@ import java.util.ArrayList;
 
 /**
  * Created by Nikola on 26.04.2017..
- */
+ *///s
 public class ImageView {
 
 
     public static JFrame frame;
+    private ArrayList<CustomImage> customImages;
     private Connection connection;
     private JPanel imageGrid = new JPanel(new GridLayout(0,5));
     private String albumName;

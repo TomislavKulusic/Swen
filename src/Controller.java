@@ -1,7 +1,3 @@
-import java.awt.*;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
 import java.sql.Connection;
 
 public class Controller {

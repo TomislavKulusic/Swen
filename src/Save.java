@@ -1,9 +1,8 @@
-import java.awt.*;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+//s
 public class Save {
 
    public boolean Save(CustomImage image) {

@@ -144,7 +144,6 @@ public class AlbumList extends JFrame implements ActionListener {
 
     /**
      * This method gets all data from database and from thoes informations crates the album model
-     *
      * @return returns the collection of albums
      */
     public ArrayList<Album> getAlbums() {

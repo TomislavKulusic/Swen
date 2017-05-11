@@ -1,13 +1,15 @@
 import javax.swing.*;
-import java.sql.Connection;
-import java.util.*;
-import java.io.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.ArrayList;
 
 /***
  * This class is for editing the pictures
- */
+ *///s
 public class ImageEdit extends JFrame implements ActionListener {
 
     private JPanel pictureView;
@@ -80,7 +82,6 @@ public class ImageEdit extends JFrame implements ActionListener {
 
 
         JButton resize = new JButton("Resize");
-        ;
         JButton flip = new JButton("Flip");
         JButton rotate = new JButton("Rotate");
         JButton save = new JButton("Save");
