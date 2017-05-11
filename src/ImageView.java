@@ -1,7 +1,7 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,23 +12,23 @@ import java.util.ArrayList;
 
 /**
  * Created by Nikola on 26.04.2017..
- *///s
+ */
 public class ImageView {
-
 
     public static JFrame frame;
     private ArrayList<CustomImage> customImages;
     private Connection connection;
-    private JPanel imageGrid = new JPanel(new GridLayout(0,5));
+    private JPanel imageGrid = new JPanel(new GridLayout(0, 5));
     private String albumName;
+    private int albumId;
 
-    public ImageView(ArrayList<CustomImage> files,Connection connection,String albumName){
+    public ImageView(Album album, Connection connection) {
         this.connection = connection;
-        this.customImages = files;
-        this.albumName = albumName;
+        this.customImages = album.getImages();
+        this.albumName = album.getAlbumName();
+        this.albumId = album.getAlbumId();
 
         frame = new JFrame();
-
 
         frame.setLocationRelativeTo(null);
         populateGrid(customImages);
@@ -38,32 +38,22 @@ public class ImageView {
         frame.setVisible(true);
     }
 
-    public void populateGrid(ArrayList<CustomImage> customImages){
+    private void populateGrid(ArrayList<CustomImage> customImages) {
+        for (CustomImage customImage : customImages) {
+            JButton imageIcon = new JButton(customImage.getRescaledImage(100, 100));
 
+            imageIcon.addActionListener(e -> {
+                try {
+                    new ImageEdit(customImage, connection);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            });
 
-
-        for(int i = 0; i < customImages.size(); i++){
-            CustomImage customImage = customImages.get(i);
-
-            JButton imageIcon = new JButton(customImage.getRescaledImage(100,100));
-
-
-            imageIcon.addActionListener(
-                    new ActionListener()
-                    {
-                        public void actionPerformed(ActionEvent e)
-                        {
-                            try {
-                                new ImageEdit(customImage,connection);
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    });
             imageGrid.add(imageIcon);
         }
 
-        frame.add(imageGrid,BorderLayout.NORTH);
+        frame.add(imageGrid, BorderLayout.NORTH);
         imageGrid.revalidate();
     }
 
@@ -72,10 +62,37 @@ public class ImageView {
         JTextField search = new JTextField(5);
         JButton searchButton = new JButton("Search");
 
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                search(search.getText());
+        JButton addImageButton = new JButton("Add Image " + albumId);
+
+        searchButton.addActionListener(e -> search(search.getText()));
+
+        addImageButton.addActionListener(e -> {
+            JFileChooser jfc = new JFileChooser();
+            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+            jfc.setFileFilter(new FileNameExtensionFilter(
+                    "Image files", ImageIO.getReaderFileSuffixes()));
+
+            if (jfc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                DatabaseImages di = new DatabaseImages(connection);
+                CustomImage ci = new CustomImage(new File(jfc.getSelectedFile().getAbsolutePath()));
+
+                customImages.add(ci);
+
+                di.addImage(ci, albumId);
+
+                JButton imageIcon = new JButton(ci.getRescaledImage(100, 100));
+
+                imageIcon.addActionListener(u -> {
+                    try {
+                        new ImageEdit(ci, connection);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+
+                imageGrid.add(imageIcon);
+                imageGrid.revalidate();
             }
         });
 
@@ -83,21 +100,21 @@ public class ImageView {
         bottomPanel.add(label);
         bottomPanel.add(search);
         bottomPanel.add(searchButton);
-        frame.add(bottomPanel,BorderLayout.SOUTH);
+        bottomPanel.add(addImageButton);
+
+        frame.add(bottomPanel, BorderLayout.SOUTH);
     }
 
     public void search(String tag) {
-        ArrayList<CustomImage> newList = new ArrayList<CustomImage>();
+        ArrayList<CustomImage> newList = new ArrayList<>();
         String tagArray[];
         imageGrid.removeAll();
-        int id = 0;
 
         if (tag.equals("")) {
             populateGrid(customImages);
         } else {
-
             try {
-            String query = "SELECT image_path, tag FROM images LEFT JOIN album ON album.album_id = images.album_id WHERE Album.album_name = ?";
+                String query = "SELECT image_path, tag FROM images LEFT JOIN album ON album.album_id = images.album_id WHERE Album.album_name = ?";
 
                 PreparedStatement newStat = connection.prepareStatement(query);
                 newStat.setString(1, albumName);
@@ -105,15 +122,14 @@ public class ImageView {
                 newRs = newStat.executeQuery();
 
                 while (newRs.next()) {
-
                     String imageName = newRs.getString("image_path");
                     String iTag = newRs.getString("tag");
                     CustomImage custom = new CustomImage(new File(imageName));
                     custom.addTag(iTag);
                     tagArray = custom.getTag().split(",");
 
-                    for (int j = 0; j < tagArray.length; j++) {
-                        if (tagArray[j].equals(tag)) {
+                    for (String aTagArray : tagArray) {
+                        if (aTagArray.equals(tag)) {
                             newList.add(custom);
                         }
                     }

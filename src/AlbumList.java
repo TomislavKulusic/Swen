@@ -67,21 +67,12 @@ public class AlbumList extends JFrame implements ActionListener {
             bottom.add(addAlbum);
 
 
-            for (int i = 0; i < list.size(); i++) {
-
+            for (Album aList : list) {
                 CustomImage cs = new CustomImage(new File("assets\\albumImage.jpg"));
                 JButton button = new JButton(cs.getRescaledImage(100, 100));
 
-
-                JLabel label = new JLabel(list.get(i).albumName);
-                Album album = list.get(i);
-                button.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        new ImageView(getAlbumImages(album), connection, album.getAlbumName());
-
-                    }
-                });
+                JLabel label = new JLabel(aList.getAlbumName());
+                button.addActionListener(e -> new ImageView(aList, connection));
 
                 JPanel panel = new JPanel();
 
@@ -116,22 +107,22 @@ public class AlbumList extends JFrame implements ActionListener {
 
             dbimg = new DatabaseImages(connection);
             albumName = JOptionPane.showInputDialog(this, "Set Album Name");
+
             if (albumName == null) {
                 return;
             }
+
             dbimg.storeAlbums(albumName);
             dbimg.storeImages(files);
 
-            new ImageView(loader.getImages(files), connection, albumName);
+            Album album = new Album(albumName);
+            album.setImages(loader.getImages(files));
+
+            new ImageView(album, connection);
 
         } else if (returnVal == JFileChooser.CANCEL_OPTION) {
             System.out.println("Cancel was selected");
-
         }
-
-
-        //this.dispose();
-
 
     }
 
@@ -160,6 +151,8 @@ public class AlbumList extends JFrame implements ActionListener {
                 int albumID = rs.getInt("album_id");
                 Album album = new Album(albumName);
 
+                album.setAlbumId(albumID);
+
                 String newQuery = "SELECT * FROM images WHERE album_id = ?";
 
                 PreparedStatement newStat = connection.prepareStatement(newQuery);
@@ -172,7 +165,6 @@ public class AlbumList extends JFrame implements ActionListener {
                     CustomImage custom = new CustomImage(new File(imageName));
                     custom.addTag(tagName);
                     album.addImages(custom);
-
                 }
 
                 albumList.add(album);

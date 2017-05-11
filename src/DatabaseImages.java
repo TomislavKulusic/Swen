@@ -45,7 +45,7 @@ public class DatabaseImages {
      * This method is used to store images to the database
      * @param images collection of image paths
      */
-    public void storeImages(ArrayList<File> images) { //TODO POPRAVIT OVO SMECE
+    public void storeImages(ArrayList<File> images) {
         String countQuery = "SELECT count(*) AS `RowCount` FROM album";
         int i = 1;
         try {
@@ -78,15 +78,15 @@ public class DatabaseImages {
      * @param image Image that you want to insert
      * @param albumID ID of an album you want to insert in
      */
-    public void addImage(File image, int albumID) {
+    public void addImage(CustomImage image, int albumID) {
         String query = "INSERT INTO Images (album_id, image_path, name, image_date, tag) VALUES (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
             preparedStmt.setInt(1, albumID);
-            preparedStmt.setString(2, image.getAbsolutePath());
-            preparedStmt.setString(3, image.getName().split("-")[0]);
+            preparedStmt.setString(2, image.getPath());
+            preparedStmt.setString(3, image.getName());
             preparedStmt.setDate(4, new Date(Calendar.getInstance().getTime().getTime()));
             preparedStmt.setString(5, image.getName() + "tag");
             preparedStmt.execute();

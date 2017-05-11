@@ -1,9 +1,6 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * Created by Tomislav on 5/2/2017.
@@ -22,7 +19,7 @@ public class Database {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             // Here you have to add your own url and password for connection to database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/gallery", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/gallery", "root", "root");
 
             if (connection != null) {
 

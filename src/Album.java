@@ -5,10 +5,9 @@ import java.util.ArrayList;
  */
 public class Album {
 
-    public String albumName;
-    public int albumId;
-
-    public ArrayList<CustomImage> images = new ArrayList<CustomImage>();
+    public ArrayList<CustomImage> images = new ArrayList<>();
+    private String albumName;
+    private int albumId;
 
     public Album(String albumName) {
         this.albumName = albumName;
@@ -22,11 +21,23 @@ public class Album {
         return images;
     }
 
+    public void setImages(ArrayList<CustomImage> images) {
+        this.images = images;
+    }
+
     public String getAlbumName() {
         return albumName;
     }
 
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
+
     public int getAlbumId() {
         return albumId;
+    }
+
+    public void setAlbumId(int albumId) {
+        this.albumId = albumId;
     }
 }

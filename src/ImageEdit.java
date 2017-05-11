@@ -2,10 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.ArrayList;
 
 /***
  * This class is for editing the pictures
@@ -14,21 +12,16 @@ public class ImageEdit extends JFrame implements ActionListener {
 
     private JPanel pictureView;
     private JLabel imageLabel;
-    private JPanel totalView;
-    private CustomImage cropCustomImage;
     private CustomImage currentCustomImage;
     private JLabel heightLabel;
     private JLabel widthLabel;
     private Connection connection = null;
-    private ArrayList<File> files;
-    private File file;
     private JButton redo = new JButton("Redo");
     private JButton undo = new JButton("Undo");
 
     private Caretaker caretaker = new Caretaker();
     private Controller controller = new Controller();
     private int mCounter = 0;
-    private boolean mementoFlag;
 
 
     /***
@@ -218,10 +211,6 @@ public class ImageEdit extends JFrame implements ActionListener {
             imageLabel.setIcon(null);
             currentCustomImage.restore(caretaker.getMemento(mCounter));
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
-
-            mementoFlag = true;
-
-
         }
 
         if(mCounter == (caretaker.getMementosSize() - 1)){

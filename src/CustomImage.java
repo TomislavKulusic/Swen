@@ -18,13 +18,13 @@ public class CustomImage {
     public BufferedImage img;
     public String tag = "";
     public String name;
+    private String path;
 
     public CustomImage(File imageFile) {
-
         this.file = imageFile;
         this.image = new ImageIcon(imageFile.toString());
         this.name = imageFile.getName().split("-")[0];
-
+        this.path = imageFile.toString();
 
         try {
             img = ImageIO.read(imageFile);
@@ -51,7 +51,6 @@ public class CustomImage {
 
     public ImageIcon getRescaledImage(int width, int height) {
         return new ImageIcon(image.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH));
-
     }
 
     public int getHeight() {
@@ -97,6 +96,9 @@ public class CustomImage {
         return tag;
     }
 
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public ImageMemento save() {
         return new ImageMemento(getImage());
@@ -108,4 +110,23 @@ public class CustomImage {
 
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public BufferedImage getImg() {
+        return img;
+    }
+
+    public void setImg(BufferedImage img) {
+        this.img = img;
+    }
+
+    public String getPath() {
+        return path;
+    }
 }
