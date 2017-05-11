@@ -96,21 +96,11 @@ public class ImageView {
             populateGrid(customImages);
         } else {
 
-            String getID = "SELECT album_id from album where album_name = ?";
-
             try {
-                PreparedStatement stat = connection.prepareStatement(getID);
-                stat.setString(1, albumName);
-                ResultSet rs = null;
-                rs = stat.executeQuery();
-
-                while (rs.next()) {
-                    id = rs.getInt("album_id");
-                }
-                String query = "select * from images where album_id = ?";
+            String query = "select images.* from Album,images where Album.album_name = ?";
 
                 PreparedStatement newStat = connection.prepareStatement(query);
-                newStat.setInt(1, id);
+                newStat.setString(1, albumName);
                 ResultSet newRs = null;
                 newRs = newStat.executeQuery();
 
