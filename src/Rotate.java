@@ -9,42 +9,36 @@ import java.awt.image.BufferedImage;
  */
 public class Rotate {
 
+    int drawLocationX = 300;
+    int drawLocationY = 300;
 
-    public void Rotate(CustomImage image, double a) {
-        //BufferedImage rotated = createRotated(image.getBufferedImage(), a);
+    public void Rotate(CustomImage image) {
 
         BufferedImage bf = image.getBufferedImage();
-
-        BufferedImage newImage = new BufferedImage(bf.getWidth(),bf.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D graphic = newImage.createGraphics();
-
-        graphic.rotate(Math.toRadians(10), bf.getWidth()/2, bf.getWidth()/2);
-
-        graphic.drawImage(bf, null, 0, 0);
-
-
+        BufferedImage newImage = createRotated(bf);
         image.setImage(new ImageIcon(newImage));
         image.setBuffered(newImage);
+
     }
 
 
-//    private static BufferedImage createRotated(BufferedImage image, double deg)
-//    {
-//        AffineTransform at = AffineTransform.getRotateInstance(Math.PI, image.getWidth()/2, image.getHeight()/2);
-//        AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-//
-//        return createTransformed(image, at);
-//    }
-//
-//    private static BufferedImage createTransformed(BufferedImage image, AffineTransform at)
-//    {
-//        BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(),BufferedImage.TYPE_INT_ARGB);
-//        Graphics2D g = newImage.createGraphics();
-//        g.transform(at);
-//        g.drawImage(image, 0, 0, null);
-//        g.dispose();
-//        return newImage;
-//    }
+    private static BufferedImage createRotated(BufferedImage image)
+    {
+        AffineTransform at = new AffineTransform();
+        at.translate(image.getWidth() / 2, image.getHeight() / 2);
+        at.rotate(Math.PI/2);
+        at.translate(-image.getWidth()/2, -image.getHeight()/2);
+        return createTransformed(image, at);
+    }
+
+    private static BufferedImage createTransformed(BufferedImage image, AffineTransform at)
+    {
+        BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(),BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = newImage.createGraphics();
+        g.transform(at);
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        return newImage;
+    }
 
 }

@@ -44,8 +44,8 @@ public class Controller {
    
    }
 
-   public void Rotate(CustomImage img,double degrees){
-       rotate.Rotate(img,degrees);
+   public void Rotate(CustomImage img){
+       rotate.Rotate(img);
    }
 
    public void addTag(String tag, Connection connection,String tags,String name) {

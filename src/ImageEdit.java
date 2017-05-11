@@ -175,7 +175,7 @@ public class ImageEdit extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("Rotate")) {
             mCounter++;
 
-            controller.Rotate(currentCustomImage, 30);
+            controller.Rotate(currentCustomImage);
             imageLabel.setIcon(null);
             imageLabel.setIcon(currentCustomImage.getRescaledImage(450, 370));
 
