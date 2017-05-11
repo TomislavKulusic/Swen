@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -14,10 +13,10 @@ import java.util.ArrayList;
  */
 
 /**
-    * This class is used used to load the albums and pictures to the database, it is
- *  also main method.
+ * This class is used used to load the albums and pictures to the database, it is
+ * also main method.
  */
-public class AlbumList extends JFrame implements ActionListener{
+public class AlbumList extends JFrame implements ActionListener {
 
     // Attributes
     private ArrayList<File> files;
@@ -32,6 +31,10 @@ public class AlbumList extends JFrame implements ActionListener{
         connection = database.getConnection();
 
         createFrame();
+    }
+
+    public static void main(String[] args) {
+        new AlbumList();
     }
 
     public void createFrame() { // method for creating frame
@@ -52,7 +55,7 @@ public class AlbumList extends JFrame implements ActionListener{
         openAlbum.addActionListener(this);
         addAlbum.addActionListener(this);
         list = getAlbums();
-        if(list.size() == 0) {
+        if (list.size() == 0) {
             JPanel panel = new JPanel();
             panel.add(openAlbum);
             add(panel);
@@ -64,10 +67,10 @@ public class AlbumList extends JFrame implements ActionListener{
             bottom.add(addAlbum);
 
 
-            for(int i = 0; i < list.size(); i++) {
+            for (int i = 0; i < list.size(); i++) {
 
                 CustomImage cs = new CustomImage(new File("assets\\albumImage.jpg"));
-                JButton button = new JButton(cs.getRescaledImage(100,100));
+                JButton button = new JButton(cs.getRescaledImage(100, 100));
 
 
                 JLabel label = new JLabel(list.get(i).albumName);
@@ -75,7 +78,7 @@ public class AlbumList extends JFrame implements ActionListener{
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                       new ImageView(getAlbumImages(album),connection,album.getAlbumName());
+                        new ImageView(getAlbumImages(album), connection, album.getAlbumName());
 
                     }
                 });
@@ -83,14 +86,14 @@ public class AlbumList extends JFrame implements ActionListener{
                 JPanel panel = new JPanel();
 
                 panel.add(button);
-                panel.add(label,BorderLayout.SOUTH);
+                panel.add(label, BorderLayout.SOUTH);
                 panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
                 buttonPannel.add(panel);
             }
-            this.add(title.add(titleLabel),BorderLayout.NORTH);
-            this.add(buttonPannel,BorderLayout.CENTER);
-            add(bottom,BorderLayout.SOUTH);
+            this.add(title.add(titleLabel), BorderLayout.NORTH);
+            this.add(buttonPannel, BorderLayout.CENTER);
+            add(bottom, BorderLayout.SOUTH);
 
         }
 
@@ -112,16 +115,16 @@ public class AlbumList extends JFrame implements ActionListener{
             files = loader.getFiles();
 
             dbimg = new DatabaseImages(connection);
-                albumName = JOptionPane.showInputDialog(this, "Set Album Name");
-                if (albumName == null) {
-                    return;
-                }
+            albumName = JOptionPane.showInputDialog(this, "Set Album Name");
+            if (albumName == null) {
+                return;
+            }
             dbimg.storeAlbums(albumName);
             dbimg.storeImages(files);
 
-            new ImageView(loader.getImages(files),connection,albumName);
+            new ImageView(loader.getImages(files), connection, albumName);
 
-        }else if (returnVal == JFileChooser.CANCEL_OPTION) {
+        } else if (returnVal == JFileChooser.CANCEL_OPTION) {
             System.out.println("Cancel was selected");
 
         }
@@ -134,36 +137,37 @@ public class AlbumList extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Open Album") || e.getActionCommand().equals("Open new Album")) {
+        if (e.getActionCommand().equals("Open Album") || e.getActionCommand().equals("Open new Album")) {
             chooseAlbum();
         }
     }
 
     /**
      * This method gets all data from database and from thoes informations crates the album model
+     *
      * @return returns the collection of albums
      */
     public ArrayList<Album> getAlbums() {
         ArrayList<Album> albumList = new ArrayList<Album>();
-        String query = "SELECT * from album";
+        String query = "SELECT * FROM album";
+
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
 
-                  String albumName = rs.getString("album_name");
-                  int albumID = rs.getInt("album_id");
-                  Album album = new Album(albumName);
+                String albumName = rs.getString("album_name");
+                int albumID = rs.getInt("album_id");
+                Album album = new Album(albumName);
 
-
-                String newQuery = "select * from images where album_id = ?";
+                String newQuery = "SELECT * FROM images WHERE album_id = ?";
 
                 PreparedStatement newStat = connection.prepareStatement(newQuery);
-                newStat.setInt(1,albumID);
+                newStat.setInt(1, albumID);
                 ResultSet newRs = newStat.executeQuery();
 
-                while(newRs.next()) {
+                while (newRs.next()) {
                     String imageName = newRs.getString("image_path");
                     String tagName = newRs.getString("tag");
                     CustomImage custom = new CustomImage(new File(imageName));
@@ -174,11 +178,12 @@ public class AlbumList extends JFrame implements ActionListener{
 
                 albumList.add(album);
 
-
-
             } // while
+
             st.close();
-        }catch (SQLException e) {}
+        } catch (SQLException ignored) {
+
+        }
 
         return albumList;
     }
@@ -190,9 +195,5 @@ public class AlbumList extends JFrame implements ActionListener{
      */
     public ArrayList<CustomImage> getAlbumImages(Album album) {
         return album.getImages();
-    }
-
-    public static void main(String[] args) {
-        new AlbumList();
     }
 }

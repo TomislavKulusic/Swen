@@ -4,7 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +16,6 @@ import java.util.ArrayList;
 public class ImageView {
 
 
-    private ArrayList<CustomImage> customImages;
     public static JFrame frame;
     private Connection connection;
     private JPanel imageGrid = new JPanel(new GridLayout(0,5));
