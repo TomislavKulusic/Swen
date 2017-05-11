@@ -39,7 +39,6 @@ public class ImageEdit extends JFrame implements ActionListener {
         frameLocationPoint.setLocation(frameLocationPoint.getX() + 500, frameLocationPoint.getY());
         setLocation(frameLocationPoint);
         setVisible(true);
-
     }
 
     private void setImageView() {

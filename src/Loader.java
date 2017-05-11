@@ -16,7 +16,7 @@ class Loader {
     }
 
     ArrayList<File> getFiles() {
-        return new ArrayList<File>(Arrays.asList(directory.listFiles()));
+        return new ArrayList<>(Arrays.asList(directory.listFiles()));
     }
 
     ArrayList<CustomImage> getImages(ArrayList<File> files) {

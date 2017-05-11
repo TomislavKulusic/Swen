@@ -16,17 +16,14 @@ public class Database {
      *
      * @return
      */
-
     Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             // Here you have to add your own url and password for connection to database
             connection = DriverManager.getConnection("jdbc:mysql://localhost/gallery", "root", "");
 
-            if (connection != null) {
-
+            if (connection != null)
                 System.out.println("Connected to database;");
-            }
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
