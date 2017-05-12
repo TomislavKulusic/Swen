@@ -75,7 +75,7 @@ class ImageView {
         JTextField search = new JTextField(5);
         JButton searchButton = new JButton("Search");
 
-        JButton addImageButton = new JButton("Add Image " + albumId);
+        JButton addImageButton = new JButton("Add Image");
 
         searchButton.addActionListener(e -> search(search.getText()));
 

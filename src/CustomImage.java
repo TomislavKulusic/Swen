@@ -203,4 +203,11 @@ public class CustomImage {
     public void setPath(String path) {
         this.path = path;
     }
+
+
+    public String getImgType() {
+        String nesto = file.getName().split("[.]")[1];
+
+        return nesto;
+    }
 }

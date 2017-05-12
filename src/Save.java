@@ -17,12 +17,15 @@ class Save {
     Save(CustomImage image) throws IOException {
         JFileChooser chooser = new JFileChooser();
         String name = image.getName();
+        image.getImgType();
 
         chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        chooser.setSelectedFile(new File(name.contains(".") ? name : name + ".jpg"));
+        chooser.setSelectedFile(new File(name.contains(".") ? name : name + "." + image.getImgType()));
+
+
 
         if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
-            ImageIO.write(image.getBufferedImage(), "jpg", chooser.getSelectedFile());
+            ImageIO.write(image.getBufferedImage(), image.getImgType(), chooser.getSelectedFile());
     }
 
 }
