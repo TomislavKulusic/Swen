@@ -2,8 +2,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,32 +82,90 @@ class ImageView {
         searchButton.addActionListener(e -> search(search.getText()));
 
         addImageButton.addActionListener(e -> {
-            JFileChooser jfc = new JFileChooser();
-            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
-            jfc.setFileFilter(new FileNameExtensionFilter(
-                    "Image files", ImageIO.getReaderFileSuffixes()));
+            Object[] options = {"URL",
+                    "Choose Image",
+                    "Cancel"};
 
-            if (jfc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
-                DatabaseImages di = new DatabaseImages(connection);
-                CustomImage ci = new CustomImage(new File(jfc.getSelectedFile().getAbsolutePath()));
+            int n = JOptionPane.showOptionDialog(frame,
+                    "Do you want to add image from URL or by selecting it",
+                    "Add Image",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[2]);
 
-                customImages.add(ci);
+            if (n == 0) {
+                String s = JOptionPane.showInputDialog(frame,
+                        "Image URL",
+                        "Add Image From URL",
+                        JOptionPane.QUESTION_MESSAGE);
 
-                di.addImage(ci, albumId);
-
-                JButton imageIcon = new JButton(ci.getRescaledImage(100, 100));
-
-                imageIcon.addActionListener(u -> {
+                if (!s.isEmpty()) {
                     try {
-                        new ImageEdit(ci, connection);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                });
+                        BufferedImage image = ImageIO.read(new URL(s));
 
-                imageGrid.add(imageIcon);
-                imageGrid.revalidate();
+                        String[] name = s.split("[/]");
+                        File file;
+
+                        if (name.length != 1)
+                            file = new File(name[name.length - 1]);
+                        else
+                            file = new File(name[name.length - 1]);
+
+                        ImageIO.write(image, file.getName().split("[.]")[1], file);
+
+                        DatabaseImages di = new DatabaseImages(connection);
+                        CustomImage ci = new CustomImage(file);
+
+                        customImages.add(ci);
+
+                        di.addImage(ci, albumId);
+
+                        JButton imageIcon = new JButton(ci.getRescaledImage(100, 100));
+
+                        imageIcon.addActionListener(u -> {
+                            try {
+                                new ImageEdit(ci, connection);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        });
+
+                        imageGrid.add(imageIcon);
+                        imageGrid.revalidate();
+                    } catch (IOException z) {
+                        z.printStackTrace();
+                    }
+                }
+            } else if (n == 1) {
+                JFileChooser jfc = new JFileChooser();
+                jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                jfc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                jfc.setFileFilter(new FileNameExtensionFilter(
+                        "Image files", ImageIO.getReaderFileSuffixes()));
+
+                if (jfc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                    DatabaseImages di = new DatabaseImages(connection);
+                    CustomImage ci = new CustomImage(new File(jfc.getSelectedFile().getAbsolutePath()));
+
+                    customImages.add(ci);
+
+                    di.addImage(ci, albumId);
+
+                    JButton imageIcon = new JButton(ci.getRescaledImage(100, 100));
+
+                    imageIcon.addActionListener(u -> {
+                        try {
+                            new ImageEdit(ci, connection);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    });
+
+                    imageGrid.add(imageIcon);
+                    imageGrid.revalidate();
+                }
             }
         });
 
